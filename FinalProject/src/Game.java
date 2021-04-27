@@ -36,7 +36,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		}
 		
 		
-		
+		//test
 		int mouseY = ((int)MouseInfo.getPointerInfo().getLocation().getY())-35;
 		int mouseX = ((int)MouseInfo.getPointerInfo().getLocation().getX())-10;
 

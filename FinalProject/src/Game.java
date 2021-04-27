@@ -34,7 +34,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		}
 		else {
 			p.paint(g);
-			
+			line(2,10,4,g);
 			for(int i=0;i<room.length;i++) {
 				for(int j=0;j<room[0].length;j++) {
 					room[i][j].paint(g);
@@ -55,7 +55,11 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
 	}
 
-	
+	public void line(int x, int x2, int y, Graphics g) {
+		for(int i =x;i<x2;i++) {
+			room[i][y] = new Stove(i,y);
+		}
+	}
 	
 	
 	// do not touch
@@ -72,12 +76,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		//LEVEL CREATION
 		for(int i =0;i<room.length;i++) {
 			for(int j=0;j<room[0].length;j++) {
-				if((i<3||i>8) || (j<3||j>12)) {
-					room[i][j] = new Counter(j,i);
-				}
-				else {
-					room[i][j] = new Tile(j,i);
-				}
+				room[i][j]=new Tile(j,i);
 				
 			}
 		}

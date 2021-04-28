@@ -33,20 +33,14 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			g.drawString("Press T to begin",33,400);
 		}
 		else {
-			p.paint(g);
-			line(2,10,4,g);
+			//room paint
 			for(int i=0;i<room.length;i++) {
 				for(int j=0;j<room[0].length;j++) {
 					room[i][j].paint(g);
 				}
 			}
-			for(int i =0;i<800;i+=50) {
-				g.drawLine(i, 0, i, 600);
-			}
-			for(int i =0;i<600;i+=50) {
-				g.drawLine(0, i, 800, i);
-			}
-			
+			grid(g);
+			p.paint(g);
 			int mouseY = ((int)MouseInfo.getPointerInfo().getLocation().getY())-35;
 			int mouseX = ((int)MouseInfo.getPointerInfo().getLocation().getX())-10;
 			
@@ -55,13 +49,24 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
 	}
 
-	public void line(int x, int x2, int y, Graphics g) {
+	public void horizLine(int x, int x2, int y, Graphics g) {
 		for(int i =x;i<x2;i++) {
 			room[y][i] = new Stove(i,y);
 		}
 	}
-	
-	
+	public void vertLine(int y, int y2, int x, Graphics g) {
+		for(int i =y;i<y2;i++) {
+			room[i][x] = new Stove(x,i);
+		}
+	}
+	public void grid(Graphics g) {
+		for(int i =0;i<800;i+=50) {
+			g.drawLine(i, 0, i, 600);
+		}
+		for(int i =0;i<600;i+=50) {
+			g.drawLine(0, i, 800, i);
+		}
+	}
 	// do not touch
 	public Game() {
 		JFrame frame = new JFrame("Food Frenzy");

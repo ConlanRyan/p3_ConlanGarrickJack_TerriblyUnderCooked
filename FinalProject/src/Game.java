@@ -57,7 +57,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
 	public void line(int x, int x2, int y, Graphics g) {
 		for(int i =x;i<x2;i++) {
-			room[i][y] = new Stove(i,y);
+			room[y][i] = new Stove(i,y);
 		}
 	}
 	

@@ -23,6 +23,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	private Player p = new Player(0,0);
     private Tile[][] room = new Tile[12][16];
     private boolean title = true;
+    private boolean colR,colL,colU,colD;
 	public void paint(Graphics g) {
 		super.paintComponent(g); // do not remove
 		if (title) {
@@ -33,13 +34,14 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			g.drawString("Press T to begin",33,400);
 		}
 		else {
-			p.paint(g);
+			
 			line(2,10,4,g);
 			for(int i=0;i<room.length;i++) {
 				for(int j=0;j<room[0].length;j++) {
 					room[i][j].paint(g);
 				}
 			}
+			p.paint(g);
 			for(int i =0;i<800;i+=50) {
 				g.drawLine(i, 0, i, 600);
 			}
@@ -53,6 +55,39 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		}
 		
 
+		//collision detection with stove tiles
+		if(p.getRect().intersects(room[4][4].getRect())) {
+			p.stopX();
+			colL=true;
+		}
+		
+		//Border collision
+		if(p.getX()+p.getWidth()>795) {
+			p.stopX();
+			colR=true;
+			//p.setSpeed(0);
+		}else {
+			colR=false;
+		}
+		if(p.getX()<10) {
+			p.stopX();
+			colL=true;
+		}else {
+			colL=false;
+		}
+		if(p.getY()+p.getHeight()>590) {
+			p.stopY();
+			colD=true;
+		}else {
+			colD=false;
+		}
+		if(p.getY()<10) {
+			p.stopY();
+			colU=true;
+		}else {
+			colU=false;
+		}
+		
 	}
 
 	public void line(int x, int x2, int y, Graphics g) {
@@ -65,7 +100,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	// do not touch
 	public Game() {
 		JFrame frame = new JFrame("Food Frenzy");
-		frame.setSize(800, 600);
+		frame.setSize(805,628);
 		frame.setResizable(false);
 		frame.setVisible(true);
 		frame.add(this);
@@ -93,23 +128,33 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		System.out.println(e.getKeyCode());
 		//w
+		
+		//if statement to check if collision
+		if(!colU) {
 		if (e.getKeyCode()==87) {
 			p.up();
 		}
+		}
 		
+		if(!colL) {
 		//a
 		if (e.getKeyCode()==65) {
 			p.left();
 		}
+		}
 		
+		if(!colD) {
 		//s
 		if (e.getKeyCode()==83) {
 			p.down();
 		}
+		}
 		
+		if(!colR) {
 		//d
 		if (e.getKeyCode()==68) {
 			p.right();
+		}
 		}
 		
 		//space

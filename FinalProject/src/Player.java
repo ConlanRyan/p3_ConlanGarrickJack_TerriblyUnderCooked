@@ -10,6 +10,7 @@ public class Player {
 	private int x,y,width,height,xVel,yVel;
 	private boolean display;
 	private int speed=10;
+	private boolean collide=false;
 	
 	public Player(int x, int y) {
 		this.x=x;
@@ -47,6 +48,7 @@ public class Player {
 		return tempImage;
 	}
 	
+	
 	public void right() {
 		xVel=speed;
 	}
@@ -59,6 +61,90 @@ public class Player {
 	public void down() {
 		yVel=speed;
 	}
+	
+	public void stopRight() {
+			xVel=0;
+	}
+	
+	public boolean getCollide() {
+		return collide;
+	}
+	public void setCollide(boolean c) {
+		collide=c;
+	}
+	
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public void setxVel(int xVel) {
+		this.xVel = xVel;
+	}
+
+	public void setyVel(int yVel) {
+		this.yVel = yVel;
+	}
+
+	public void setDisplay(boolean display) {
+		this.display = display;
+	}
+
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+
+	public void setTx(AffineTransform tx) {
+		this.tx = tx;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public int getxVel() {
+		return xVel;
+	}
+
+	public int getyVel() {
+		return yVel;
+	}
+
+	public boolean isDisplay() {
+		return display;
+	}
+
+	public int getSpeed() {
+		return speed;
+	}
+
+	public AffineTransform getTx() {
+		return tx;
+	}
+
 	public void stopX() {
 		xVel = 0;
 	}

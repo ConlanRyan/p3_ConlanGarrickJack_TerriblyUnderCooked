@@ -1,3 +1,4 @@
+import java.awt.Rectangle;
 
 public class Stove extends Tile {
 	
@@ -6,5 +7,7 @@ public class Stove extends Tile {
 		imgName = "stovetop.png";
 		collide = true;
 	}
+	
+	
 	
 }

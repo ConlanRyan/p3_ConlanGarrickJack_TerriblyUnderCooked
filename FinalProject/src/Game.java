@@ -69,9 +69,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	}
 	// do not touch
 	public Game() {
-		JFrame frame = new JFrame("Food Frenzy");
-		frame.setSize(800, 600);
+		JFrame frame = new JFrame("Terribly Under Cooked");
+		frame.setSize(815, 637);
 		frame.setResizable(false);
+		frame.setResizable(true);
 		frame.setVisible(true);
 		frame.add(this);
 		frame.addKeyListener(this);

@@ -24,6 +24,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     private Tile[][] room = new Tile[12][16];
     private boolean title = true;
     private boolean colR,colL,colU,colD;
+   
 	public void paint(Graphics g) {
 		super.paintComponent(g); // do not remove
 		if (title) {

@@ -34,13 +34,15 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			g.drawString("Press T to begin",33,400);
 		}
 		else {
-			
+
+			//room paint
 
 			for(int i=0;i<room.length;i++) {
 				for(int j=0;j<room[0].length;j++) {
 					room[i][j].paint(g);
 				}
 			}
+
 
 			p.paint(g);
 			for(int i =0;i<800;i+=50) {

@@ -9,7 +9,7 @@ import java.net.URL;
 public class Player {
 	private int x,y,width,height,xVel,yVel;
 	private boolean display;
-	private int speed=10;
+	private int speed=5;
 	private boolean collide=false;
 	
 	public Player(int x, int y) {

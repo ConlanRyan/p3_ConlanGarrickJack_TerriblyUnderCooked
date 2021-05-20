@@ -10,6 +10,7 @@ public class Tile {
 	private int x,y,width,height;
 	protected boolean collide;
 	protected String imgName;
+	protected boolean canGrab;
 	public Tile(int x, int y) {
 		collide=false;
 		imgName = "Tile.png";
@@ -33,6 +34,9 @@ public class Tile {
 		
 		
 	}
+	public boolean canGrab() {
+		return canGrab;
+	}
 	
 	public boolean canCollide() {
 		return collide;
@@ -55,4 +59,5 @@ public class Tile {
 		Rectangle temp = new Rectangle(x,y,width,height);
 		return temp;
 	}
+	
 }

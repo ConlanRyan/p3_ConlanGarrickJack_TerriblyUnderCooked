@@ -69,6 +69,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				room[9][10] = new Stove(10,9);
 				room[2][4] = new Sink(4,2);
 				
+				room[4][4] = new Food(4,4,"plate.png");
+				
 			}
 			else if (level==2) {
 				
@@ -228,8 +230,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		
 		//e
 		if(e.getKeyCode()==69) {
-			
+			p.pickUp(room);
 		}
+		
 		if(e.getKeyCode()==84) {
 			title=false;
 		}

@@ -23,9 +23,11 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	private Player p = new Player(0,0);
     private Tile[][] room = new Tile[12][16];
     private boolean title = true;
+    private int level = 0;
     private boolean colR,colL,colU,colD;
    
 	public void paint(Graphics g) {
+		level=1;
 		super.paintComponent(g); // do not remove
 		if (title) {
 			
@@ -35,21 +37,47 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			g.drawString("Press T to begin",33,400);
 		}
 		else {
-			
-			line(2,10,4,g);
+			//room paint
 			for(int i=0;i<room.length;i++) {
 				for(int j=0;j<room[0].length;j++) {
 					room[i][j].paint(g);
 				}
 			}
-			p.paint(g);
-			for(int i =0;i<800;i+=50) {
-				g.drawLine(i, 0, i, 600);
+			//level selector
+			if(level==0) {
+				
 			}
-			for(int i =0;i<600;i+=50) {
-				g.drawLine(0, i, 800, i);
+			//breakfast
+			else if (level==1) {
+				//counters
+				horizLine(2,4,2,"counter");
+				horizLine(6,8,2,"counter");
+				vertLine(2,4,13,"counter");
+				vertLine(7,10,13,"counter");
+				room[9][11] = new Counter(11,9);
+				room[9][9] = new Counter(9,9);
+				room[9][7] = new Counter(7,9);
+				room[9][5] = new Counter(5,9);
+				horizLine(2,4,9,"counter");
+				vertLine(6,9,2,"counter");
+				room[4][2] = new Counter(2,4);
+				
+				//stoves
+				room[2][9] = new Stove(9,2);
+				room[2][11] = new Stove(11,2);
+				room[9][8] = new Stove(8,9);
+				room[9][10] = new Stove(10,9);
+				room[2][4] = new Sink(4,2);
+				
+			}
+			else if (level==2) {
+				
+				
 			}
 			
+			
+			grid(g);
+			p.paint(g);
 			int mouseY = ((int)MouseInfo.getPointerInfo().getLocation().getY())-35;
 			int mouseX = ((int)MouseInfo.getPointerInfo().getLocation().getX())-10;
 			
@@ -91,18 +119,53 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		
 	}
 
-	public void line(int x, int x2, int y, Graphics g) {
+	public void horizLine(int x, int x2, int y, String type) {
 		for(int i =x;i<x2;i++) {
-			room[i][y] = new Stove(i,y);
+			if(type.toLowerCase().equals("stove")) {
+				room[y][i] = new Stove(i,y);
+			}
+			else if(type.toLowerCase().equals("counter")) {
+				room[y][i] = new Counter(i,y);
+			}
+			else if(type.toLowerCase().equals("tile")) {
+				room[y][i] = new Tile(i,y);
+			}
+			
+			
 		}
 	}
 	
-	
+	public void vertLine(int y, int y2, int x, String type) {
+		for(int i =y;i<y2;i++) {
+			
+			if(type.toLowerCase().equals("stove")) {
+				room[i][x] = new Stove(x,i);
+			}
+			else if(type.toLowerCase().equals("counter")) {
+				room[i][x] = new Counter(x,i);
+			}
+			else if(type.toLowerCase().equals("tile")) {
+				room[i][x] = new Tile(x,i);
+			}
+			
+		}
+	}
+	public void grid(Graphics g) {
+		for(int i =0;i<800;i+=50) {
+			g.drawLine(i, 0, i, 600);
+		}
+		for(int i =0;i<600;i+=50) {
+			g.drawLine(0, i, 800, i);
+		}
+	}
 	// do not touch
 	public Game() {
-		JFrame frame = new JFrame("Food Frenzy");
-		frame.setSize(805,628);
+
+		JFrame frame = new JFrame("Terribly Under Cooked");
+		frame.setSize(815, 637);
+
 		frame.setResizable(false);
+		frame.setResizable(true);
 		frame.setVisible(true);
 		frame.add(this);
 		frame.addKeyListener(this);

@@ -25,6 +25,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     private boolean title = true;
     private int level = 0;
     private boolean colR,colL,colU,colD;
+   
 	public void paint(Graphics g) {
 		level=1;
 		super.paintComponent(g); // do not remove

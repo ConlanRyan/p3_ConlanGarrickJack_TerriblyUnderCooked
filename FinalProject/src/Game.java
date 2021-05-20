@@ -94,6 +94,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		}
 		
 	}
+	public void randomChange() {
+		
+	}
 
 	public void horizLine(int x, int x2, int y, Graphics g) {
 		for(int i =x;i<x2;i++) {

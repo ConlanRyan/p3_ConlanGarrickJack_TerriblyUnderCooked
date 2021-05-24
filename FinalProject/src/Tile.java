@@ -11,6 +11,7 @@ public class Tile {
 	protected boolean collide;
 	protected String imgName;
 	protected boolean canGrab;
+	protected int seconds=0;
 	public Tile(int x, int y) {
 		collide=false;
 		imgName = "Tile.png";
@@ -18,6 +19,9 @@ public class Tile {
 		this.y = y*50;
 		width = 50;
 		height = 50;
+	}
+	public void update(int timer) {
+		seconds=timer;
 	}
 	
 	private AffineTransform tx = AffineTransform.getTranslateInstance(x, y);

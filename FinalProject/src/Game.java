@@ -25,7 +25,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     private boolean title = true;
     private int level = 0;
     private boolean colR,colL,colU,colD;
-   
+    private int count=0, seconds=0;
+    
 	public void paint(Graphics g) {
 		level=1;
 		super.paintComponent(g); // do not remove
@@ -66,7 +67,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				room[2][9] = new Stove(9,2);
 				room[2][11] = new Stove(11,2);
 				room[9][8] = new Stove(8,9);
-				room[9][10] = new Stove(10,9);
+				
 				room[2][4] = new Sink(4,2);
 				
 				room[4][4] = new Food(4,4,"plate.png");
@@ -85,12 +86,20 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			
 		}
 		
+		//testing timer
+		//Stove s = new Stove(100,100);
+		
+			//s.cookingTimer();
+		
+			
+			
+		
 
 		//collision detection with stove tiles
-		if(p.getRect().intersects(room[4][4].getRect())) {
+		/*if(p.getRect().intersects(room[4][4].getRect())) {
 			p.stopX();
 			colL=true;
-		}
+		}*/
 		
 		//Border collision
 		if(p.getX()+p.getWidth()>795) {
@@ -181,6 +190,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				
 			}
 		}
+		Stove s = new Stove(10,9);
+		room[9][10] = s;
+		s.setCookingLimit();
 		
 		t.start();
 		frame.getContentPane().setBackground(Color.black);
@@ -269,7 +281,16 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		repaint();
+		count+=20;
+		if(count%1000==0) {
+			seconds++;
+		}
 
+		for(int i=0;i<room.length;i++) {
+			for(int j=0;j<room[0].length;j++) {
+				room[i][j].update(seconds);
+			}
+		}
 
 		
 	}

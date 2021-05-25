@@ -38,7 +38,9 @@ public class Player {
 		tx.setToTranslation(x, y);
 		
 	}
-	
+	public int direction(){
+		return direction;
+	}
 	// converts image to make it drawable in paint
 	private Image getImage(String path) {
 		Image tempImage = null;
@@ -53,20 +55,29 @@ public class Player {
 	
 	public void pickUp(Tile[][] room) {
 		//looking up and something above?
+		System.out.println("Method activated");
 		if(direction==0&&(room[(y-50)/50][x/50].canGrab())){
 			isHolding = true;
+			room[(y-50)/50][x/50].setBeingHeld(true);
+			System.out.println("Picked up");
 		}
 		//looking right?
 		else if(direction==1&&(room[y/50][(x+50)/50].canGrab())){
 			isHolding = true;
+			room[y/50][(x+50)/50].setBeingHeld(true);
+			System.out.println("Picked right");
 		}
 		//looking down?
 		else if(direction==2&&(room[(y+50)/50][x/50].canGrab())){
 			isHolding = true;
+			room[(y+50)/50][x/50].setBeingHeld(true);
+			System.out.println("Picked down");
 		}		
 		//looking left?
 		else if(direction==3&&(room[y/50][(x-50)/50].canGrab())){
 			isHolding = true;	
+			room[y/50][(x-50)/50].setBeingHeld(true);
+			System.out.println("Picked left");
 		}
 		
 	}

@@ -1,3 +1,4 @@
+import java.awt.Graphics;
 
 public class Food extends Tile{
 	boolean canCook;
@@ -6,11 +7,21 @@ public class Food extends Tile{
 	boolean boiled;
 	boolean canToast;
 	boolean toasted;
-	public Food(int x, int y, String imgName) {
-		super(x, y);
+	boolean canChop;
+	boolean chopped;
+	
+	public Food(int x, int y, String imgName, Player p) {
+		super(x, y,p);
 		collide = false;
-		canGrab = true;
+		canGrab = true; 
 		this.imgName=imgName;
 	}
-
+	public void paint(Graphics g) {
+		super.paint(g);
+		
+	}
+	public String getImageName() {
+		return imgName;
+	}
+	
 }

@@ -25,7 +25,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     private boolean title = true;
     private int level = 0;
     private boolean colR,colL,colU,colD;
-    private int count=0, seconds=0;
+    private int count=0, seconds=0,num=2;
+  
     
 	public void paint(Graphics g) {
 		level=1;
@@ -70,6 +71,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				room[9][10] = new Stove(10,9);
 				room[2][4] = new Sink(4,2);
 				
+				//cutting Board
+				room[2][7] = new CuttingBoard(7,2);
+				
 			}
 			else if (level==2) {
 				
@@ -85,10 +89,15 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		}
 		
 		//testing timer
-		//Stove s = new Stove(100,100);
 		
-			//s.cookingTimer();
+		//for each timer you add you must update the global num variable!!! 
 		
+		//format: cookingTimer(g,*x location,*y location,number of timers,number of seconds)
+		
+			cookingTimer(g,room[9][10].getX(),room[9][10].getY(),num,5);
+			cookingTimer(g,room[9][8].getX(),room[9][8].getY(),num,10);
+			//cookingTimer(g,room[2][11].getX(),room[2][11].getY());
+			//cookingTimer(g,room[10][9].getX()-50,room[10][9].getY()-50);
 			
 			
 		
@@ -275,20 +284,39 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		repaint();
-		count+=20;
-		if(count%1000==0) {
-			seconds++;
-			System.out.println(seconds);
-		}
-
-		for(int i=0;i<room.length;i++) {
-			for(int j=0;j<room[0].length;j++) {
-				room[i][j].update(seconds);
-			}
-		}
+		
 
 		
 	}
+	public void cookingTimer(Graphics g,int x , int y, int num, int time) {
+		count+=20/num;
+		if(seconds<time) {
+		if(count%(1000)==0) {
+			seconds++;
+			System.out.println(seconds);
+		}
+			
+			
+		if(seconds%4==0) {
+			
+			g.drawImage(getImage("UpTimer.png"),x,y,50,50,null);
+		}else if(seconds%4==1) {
+			
+			g.drawImage(getImage("RightTimer.png"),x,y,50,50,null);
+		}else if(seconds%4==2) {
+			
+			g.drawImage(getImage("DownTimer.png"),x,y,50,50,null);
+		}else{
+			
+			g.drawImage(getImage("LeftTimer.png"),x,y,50,50,null);
+		}
+		}
+		
+		
+	}
+	
+	
+	
 	private Image getImage(String path) {
 		Image tempImage = null;
 		try {

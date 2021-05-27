@@ -20,7 +20,7 @@ import java.net.URL;
 public class Game extends JPanel implements ActionListener, KeyListener {
 	//800x600
 	//16x12 50 pixel tiles
-	private Player p = new Player(0,0);
+	private Player p = new Player(300,400);
     private Tile[][] room = new Tile[12][16];
     private boolean title = true;
     private int level = 0;
@@ -56,23 +56,25 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				horizLine(6,8,2,"counter");
 				vertLine(2,4,13,"counter");
 				vertLine(7,10,13,"counter");
-				room[9][11] = new Counter(11,9);
-				room[9][9] = new Counter(9,9);
-				room[9][7] = new Counter(7,9);
-				room[9][5] = new Counter(5,9);
+				room[9][11] = new Counter(11,9,p);
+				room[9][9] = new Counter(9,9,p);
+				room[9][7] = new Counter(7,9,p);
+				room[9][5] = new Counter(5,9,p);
 				horizLine(2,4,9,"counter");
 				vertLine(6,9,2,"counter");
-				room[4][2] = new Counter(2,4);
+				room[4][2] = new Counter(2,4,p);
 				
 				//stoves
-				room[2][9] = new Stove(9,2);
-				room[2][11] = new Stove(11,2);
-				room[9][8] = new Stove(8,9);
-				room[9][10] = new Stove(10,9);
-				room[2][4] = new Sink(4,2);
+				room[2][9] = new Stove(9,2,p);
+				room[2][11] = new Stove(11,2,p);
+				room[9][8] = new Stove(8,9,p);
+				
+				room[2][4] = new Sink(4,2,p);
+				
+				room[4][4] = new Plate(4,4,p);
 				
 				//cutting Board
-				room[2][7] = new CuttingBoard(7,2);
+				room[2][7] = new CuttingBoard(7,2,p);
 				
 			}
 			else if (level==2) {
@@ -140,13 +142,13 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	public void horizLine(int x, int x2, int y, String type) {
 		for(int i =x;i<x2;i++) {
 			if(type.toLowerCase().equals("stove")) {
-				room[y][i] = new Stove(i,y);
+				room[y][i] = new Stove(i,y,p);
 			}
 			else if(type.toLowerCase().equals("counter")) {
-				room[y][i] = new Counter(i,y);
+				room[y][i] = new Counter(i,y,p);
 			}
 			else if(type.toLowerCase().equals("tile")) {
-				room[y][i] = new Tile(i,y);
+				room[y][i] = new Tile(i,y,p);
 			}
 			
 			
@@ -157,13 +159,13 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		for(int i =y;i<y2;i++) {
 			
 			if(type.toLowerCase().equals("stove")) {
-				room[i][x] = new Stove(x,i);
+				room[i][x] = new Stove(x,i,p);
 			}
 			else if(type.toLowerCase().equals("counter")) {
-				room[i][x] = new Counter(x,i);
+				room[i][x] = new Counter(x,i,p);
 			}
 			else if(type.toLowerCase().equals("tile")) {
-				room[i][x] = new Tile(x,i);
+				room[i][x] = new Tile(x,i,p);
 			}
 			
 		}
@@ -193,7 +195,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		//LEVEL CREATION
 		for(int i =0;i<room.length;i++) {
 			for(int j=0;j<room[0].length;j++) {
-				room[i][j]=new Tile(j,i);
+				room[i][j]=new Tile(j,i,p);
 				
 			}
 		}
@@ -246,8 +248,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		
 		//e
 		if(e.getKeyCode()==69) {
-			
+			p.pickUp(room);
+			System.out.println("E is pressed");
 		}
+		
 		if(e.getKeyCode()==84) {
 			title=false;
 		}
@@ -284,6 +288,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		repaint();
+
 		
 
 		

@@ -10,6 +10,8 @@ public class Tile {
 	private int x,y,width,height;
 	protected boolean collide;
 	protected String imgName;
+	protected boolean canGrab;
+	protected int seconds=0;
 	public Tile(int x, int y) {
 		collide=false;
 		imgName = "Tile.png";
@@ -17,6 +19,9 @@ public class Tile {
 		this.y = y*50;
 		width = 50;
 		height = 50;
+	}
+	public void update(int timer) {
+		seconds=timer;
 	}
 	
 	private AffineTransform tx = AffineTransform.getTranslateInstance(x, y);
@@ -32,6 +37,9 @@ public class Tile {
 		g2.drawImage(getImage(imgName), tx, null);
 		
 		
+	}
+	public boolean canGrab() {
+		return canGrab;
 	}
 	
 	public boolean canCollide() {
@@ -55,4 +63,5 @@ public class Tile {
 		Rectangle temp = new Rectangle(x,y,width,height);
 		return temp;
 	}
+	
 }

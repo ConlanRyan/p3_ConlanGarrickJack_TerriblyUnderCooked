@@ -9,9 +9,10 @@ import java.net.URL;
 public class Player {
 	private int x,y,width,height,xVel,yVel;
 	private boolean display;
-	private int speed=10;
+	private int speed=5;
 	private boolean collide=false;
-	
+	private boolean isHolding;
+	private int direction;
 	public Player(int x, int y) {
 		this.x=x;
 		this.y=y;
@@ -19,6 +20,8 @@ public class Player {
 		yVel=0;
 		width = 50;
 		height = 50;
+		isHolding = false;
+		direction = 0;
 	}
 	
 	private AffineTransform tx = AffineTransform.getTranslateInstance(x, y);
@@ -48,18 +51,41 @@ public class Player {
 		return tempImage;
 	}
 	
+	public void pickUp(Tile[][] room) {
+		//looking up and something above?
+		if(direction==0&&(room[(y-50)/50][x/50].canGrab())){
+			isHolding = true;
+		}
+		//looking right?
+		else if(direction==1&&(room[y/50][(x+50)/50].canGrab())){
+			isHolding = true;
+		}
+		//looking down?
+		else if(direction==2&&(room[(y+50)/50][x/50].canGrab())){
+			isHolding = true;
+		}		
+		//looking left?
+		else if(direction==3&&(room[y/50][(x-50)/50].canGrab())){
+			isHolding = true;	
+		}
+		
+	}
 	
 	public void right() {
 		xVel=speed;
+		direction = 1;
 	}
 	public void left() {
 		xVel=-speed;
+		direction = 3;
 	}
     public void up() {
     	yVel=-speed;
+    	direction = 0;
 	}
 	public void down() {
 		yVel=speed;
+		direction = 2;
 	}
 	
 	public void stopRight() {

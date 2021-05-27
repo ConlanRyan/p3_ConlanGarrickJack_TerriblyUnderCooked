@@ -68,13 +68,19 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				room[2][9] = new Stove(9,2,p);
 				room[2][11] = new Stove(11,2,p);
 				room[9][8] = new Stove(8,9,p);
+				room[9][10]= new Stove(10,9,p);
 				
+				//sink for washing dishes
 				room[2][4] = new Sink(4,2,p);
 				
-				room[4][4] = new Plate(4,4,p);
+				//plates in their starting locations
+				room[2][8] = new Plate(8,2,p);
+				room[2][10] = new Plate(10,2,p);
+				room[2][12] = new Plate(12,2,p);
 				
 				//cutting Board
-				room[2][7] = new CuttingBoard(7,2,p);
+				room[9][4] = new CuttingBoard(4,9,p);
+				room[9][6] = new CuttingBoard(6,9,p);
 				
 			}
 			else if (level==2) {
@@ -96,8 +102,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		
 		//format: cookingTimer(g,*x location,*y location,number of timers,number of seconds)
 		
-			cookingTimer(g,room[9][10].getX(),room[9][10].getY(),num,5);
-			cookingTimer(g,room[9][8].getX(),room[9][8].getY(),num,10);
+			//cookingTimer(g,room[9][10].getX(),room[9][10].getY(),num,5);
+			//cookingTimer(g,room[9][8].getX(),room[9][8].getY(),num,10);
 			//cookingTimer(g,room[2][11].getX(),room[2][11].getY());
 			//cookingTimer(g,room[10][9].getX()-50,room[10][9].getY()-50);
 			

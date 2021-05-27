@@ -1,3 +1,4 @@
+
 import java.awt.Graphics;
 
 public class Food extends Tile{
@@ -25,3 +26,4 @@ public class Food extends Tile{
 	}
 	
 }
+

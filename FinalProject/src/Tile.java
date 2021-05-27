@@ -92,5 +92,11 @@ public class Tile {
 		Rectangle temp = new Rectangle(x,y,width,height);
 		return temp;
 	}
-	
+
+	public int getX() {
+		return x;
+	}
+	public int getY(){
+		return y;
+	}
 }

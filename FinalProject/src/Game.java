@@ -32,10 +32,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		super.paintComponent(g); // do not remove
 		if (title) {
 			
-			g.drawImage(getImage("terriblyundercooked.png"),0,0,800,600,null);
+			g.drawImage(getImage("title.png"),0,0,800,600,null);
 			g.setFont(new Font("courier",30,30));
 			g.setColor(new Color(255,255,255));
-			g.drawString("Press T to begin",33,400);
 		}
 		else {
 			//room paint
@@ -85,22 +84,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			int mouseX = ((int)MouseInfo.getPointerInfo().getLocation().getX())-10;
 			
 		}
-		
-		//testing timer
-		//Stove s = new Stove(100,100);
-		
-			//s.cookingTimer();
-		
-			
-			
-		
-
-		//collision detection with stove tiles
-		/*if(p.getRect().intersects(room[4][4].getRect())) {
-			p.stopX();
-			colL=true;
-		}*/
-		
 		//Border collision
 		if(p.getX()+p.getWidth()>795) {
 			p.stopX();
@@ -279,10 +262,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		repaint();
-		count+=20;
-		if(count%1000==0) {
-			seconds++;
-		}
 
 		for(int i=0;i<room.length;i++) {
 			for(int j=0;j<room[0].length;j++) {

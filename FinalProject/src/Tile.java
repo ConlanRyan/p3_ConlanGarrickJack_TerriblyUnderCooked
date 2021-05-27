@@ -75,6 +75,13 @@ public class Tile {
 	public void setBeingHeld(boolean held) {
 		beingHeld = held;
 	}
+	public int getX() {
+		return x;
+		
+	}
+	public int getY() {
+		return y;
+	}
 	// converts image to make it drawable in paint
 	protected Image getImage(String path) {
 		Image tempImage = null;

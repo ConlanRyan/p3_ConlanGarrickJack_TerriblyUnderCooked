@@ -56,25 +56,26 @@ public class Player {
 	public void pickUp(Tile[][] room) {
 		//looking up and something above?
 		System.out.println("Method activated");
-		if(direction==0&&(room[(y-50)/50][x/50].canGrab())){
+		System.out.println(direction);
+		if(direction==0&&(room[(int)((y-50)/50)][(int)(x/50)].canGrab())){
 			isHolding = true;
-			room[(y-50)/50][x/50].setBeingHeld(true);
+			room[(y-50)/50][(int)(x/50)].setBeingHeld(true);
 			System.out.println("Picked up");
 		}
 		//looking right?
-		else if(direction==1&&(room[y/50][(x+50)/50].canGrab())){
+		else if(direction==1&&(room[(int)(y/50)][((int)(x+50)/50)].canGrab())){
 			isHolding = true;
 			room[y/50][(x+50)/50].setBeingHeld(true);
 			System.out.println("Picked right");
 		}
 		//looking down?
-		else if(direction==2&&(room[(y+50)/50][x/50].canGrab())){
+		else if(direction==2&&(room[(int)((y+50)/50)][(int)(x/50)].canGrab())){
 			isHolding = true;
 			room[(y+50)/50][x/50].setBeingHeld(true);
 			System.out.println("Picked down");
 		}		
 		//looking left?
-		else if(direction==3&&(room[y/50][(x-50)/50].canGrab())){
+		else if(direction==3&&(room[(int)(y/50)][(int)((x-50)/50)].canGrab())){
 			isHolding = true;	
 			room[y/50][(x-50)/50].setBeingHeld(true);
 			System.out.println("Picked left");
@@ -191,7 +192,7 @@ public class Player {
 	}
 	/* Helper function for collision detection later */
 	public Rectangle getRect() {
-		Rectangle temp = new Rectangle(x,y,width,height);
+		Rectangle temp = new Rectangle(x-1,y-1,width+2,height+2);
 		return temp;
 	}
 }

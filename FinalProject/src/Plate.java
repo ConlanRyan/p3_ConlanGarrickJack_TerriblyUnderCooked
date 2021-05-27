@@ -5,7 +5,7 @@ public class Plate extends Tile {
 	public Plate(int x, int y, Player p) {
 		super(x, y,p);
 		imgName = "plate.png";
-		collide = false;
+		collide = true;
 	}
 	public void add(Food f) {
 		foods.add(0,f);

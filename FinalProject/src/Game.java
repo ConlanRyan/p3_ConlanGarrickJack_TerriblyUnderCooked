@@ -20,7 +20,7 @@ import java.net.URL;
 public class Game extends JPanel implements ActionListener, KeyListener {
 	//800x600
 	//16x12 50 pixel tiles
-	private Player p = new Player(300,400);
+	private Player p = new Player(200,300);
     private Tile[][] room = new Tile[12][16];
     private boolean title = true;
     private int level = 0;
@@ -84,33 +84,76 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			int mouseX = ((int)MouseInfo.getPointerInfo().getLocation().getX())-10;
 			
 		}
-		//Border collision
-		if(p.getX()+p.getWidth()>795) {
-			p.stopX();
-			colR=true;
-			//p.setSpeed(0);
-		}else {
-			colR=false;
-		}
-		if(p.getX()<10) {
-			p.stopX();
-			colL=true;
-		}else {
-			colL=false;
-		}
-		if(p.getY()+p.getHeight()>590) {
-			p.stopY();
-			colD=true;
-		}else {
-			colD=false;
-		}
-		if(p.getY()<10) {
-			p.stopY();
-			colU=true;
-		}else {
-			colU=false;
+		for(int i=0;i<room.length;i++) {
+			for(int j =0;j<room[0].length;j++) {
+				if(p.getRect().intersects(room[i][j].getRect())&&room[i][j].canCollide()) {
+					System.out.println("Collide");
+					if(room[i][j].getX()<p.getX()) {
+						//tile is to the left
+						colL = true;
+					}
+					else {
+						colL=false;
+					}
+					if(room[i][j].getX()>p.getX()) {
+						//tile is to the right
+						colR = true;
+					}
+					else {
+						colR=false;
+					}
+					
+					//directly on top or below
+					if(room[i][j].getY()<p.getY()) {
+						//player is below
+						p.stopY();
+						colU = true;
+					}
+					else {
+						colU=false;
+					}
+					if(room[i][j].getY()>p.getY()) {
+						//player is above
+						p.stopY();
+						colD = true;
+					}
+					else {
+						colD=false;
+					}
+					
+		            p.stopX();
+		            colL=true;
+		        }
+			}
 		}
 		
+//		//Border collision
+//		if(p.getX()+p.getWidth()>795) {
+//			p.stopX();
+//			colR=true;
+//			//p.setSpeed(0);
+//		}else {
+//			colR=false;
+//		}
+//		if(p.getX()<10) {
+//			p.stopX();
+//			colL=true;
+//		}else {
+//			colL=false;
+//		}
+//		if(p.getY()+p.getHeight()>590) {
+//			p.stopY();
+//			colD=true;
+//		}else {
+//			colD=false;
+//		}
+//		if(p.getY()<10) {
+//			p.stopY();
+//			colU=true;
+//		}else {
+//			colU=false;
+//		}
+//		
 	}
 
 	public void horizLine(int x, int x2, int y, String type) {
@@ -184,6 +227,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		System.out.println()
 		System.out.println(e.getKeyCode());
 		//w
 		
@@ -191,6 +235,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		if(!colU) {
 		if (e.getKeyCode()==87) {
 			p.up();
+			
+			
 		}
 		}
 		
@@ -198,6 +244,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		//a
 		if (e.getKeyCode()==65) {
 			p.left();
+			
+			
 		}
 		}
 		
@@ -205,14 +253,16 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		//s
 		if (e.getKeyCode()==83) {
 			p.down();
+		
+			
 		}
 		}
 		
-		if(!colR) {
 		//d
 		if (e.getKeyCode()==68) {
 			p.right();
-		}
+			
+			
 		}
 		
 		//space

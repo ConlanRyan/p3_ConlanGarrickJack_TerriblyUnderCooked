@@ -7,8 +7,8 @@ public class Stove extends Tile {
 	private boolean timer=false;
 	private int cookingLimit=0;
 	private boolean cooking = false;
-	public Stove(int x, int y) {
-		super(x, y);
+	public Stove(int x, int y, Player p) {
+		super(x, y, p);
 		imgName = "stovetop.png";
 		collide = true;
 	}
@@ -17,13 +17,15 @@ public class Stove extends Tile {
 	}
 	public void paint(Graphics g) {
 		super.paint(g);
-		System.out.println(seconds+", "+cookingLimit);
-		if( seconds==cookingLimit ) {
+		
+		if( seconds!=cookingLimit ) {
+			
 		}
 		else{
 			cooking=false;
 		}
 	}
+
 	/*public void cookingTimer(){
 		timer=true;
 		

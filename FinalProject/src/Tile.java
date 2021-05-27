@@ -14,8 +14,9 @@ public class Tile {
 	protected boolean collide;
 	protected String imgName;
 	protected boolean canGrab;
-	protected int seconds=0;
 	protected boolean beingHeld;
+	protected int seconds=0;
+
 	protected Player p;
 	public Tile(int x, int y, Player p) {
 		collide=false;
@@ -96,6 +97,7 @@ public class Tile {
 	public int getX() {
 		return x;
 	}
+
 	public int getY(){
 		return y;
 	}

@@ -30,14 +30,15 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	public void paint(Graphics g) {
 		level=1;
 		super.paintComponent(g); // do not remove
-		if (title) {
-			
+		if (title) {	
 			g.drawImage(getImage("title.png"),0,0,800,600,null);
 			g.setFont(new Font("courier",30,30));
 			g.setColor(new Color(255,255,255));
 		}
+
 		else {
 			//room paint
+
 			for(int i=0;i<room.length;i++) {
 				for(int j=0;j<room[0].length;j++) {
 					room[i][j].paint(g);
@@ -74,10 +75,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			}
 			else if (level==2) {
 				
-				
 			}
 			
-			
+
+
 			grid(g);
 			p.paint(g);
 			int mouseY = ((int)MouseInfo.getPointerInfo().getLocation().getY())-35;
@@ -154,10 +155,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	}
 	// do not touch
 	public Game() {
-
 		JFrame frame = new JFrame("Terribly Under Cooked");
 		frame.setSize(815, 637);
-
 		frame.setResizable(false);
 		frame.setResizable(true);
 		frame.setVisible(true);

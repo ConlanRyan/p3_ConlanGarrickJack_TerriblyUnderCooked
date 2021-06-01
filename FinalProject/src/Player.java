@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Player {
 	private int x,y,width,height,xVel,yVel;
 	private boolean display;
-	private int speed=5;
+	private int speed=10;
 	private boolean collide=false;
 	private boolean isHolding;
 	private int direction;

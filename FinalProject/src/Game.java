@@ -96,41 +96,30 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			for(int j =0;j<room[0].length;j++) {
 				if(p.getRect().intersects(room[i][j].getRect())&&room[i][j].canCollide()) {
 					System.out.println("Collide");
-					if(room[i][j].getX()<p.getX()) {
+					//accounting for the width
+					if(room[i][j].getX()+50<=p.getX()) {
 						//tile is to the left
+						p.stopX();
 						colL = true;
 					}
-					else {
-						colL=false;
-					}
-					if(room[i][j].getX()>p.getX()) {
+					
+					else if(room[i][j].getX()>p.getX()) {
 						//tile is to the right
+						p.stopX();
 						colR = true;
 					}
-					else {
-						colR=false;
-					}
-					
-					//directly on top or below
-					if(room[i][j].getY()<p.getY()) {
+					else if(room[i][j].getY()+50<=p.getY()) {
 						//player is below
 						p.stopY();
 						colU = true;
 					}
-					else {
-						colU=false;
-					}
-					if(room[i][j].getY()>p.getY()) {
+					
+					else if(room[i][j].getY()>p.getY()) {
 						//player is above
 						p.stopY();
 						colD = true;
 					}
-					else {
-						colD=false;
-					}
-					
-		            p.stopX();
-		            colL=true;
+			
 		        }
 			}
 		}
@@ -239,35 +228,46 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		//w
 		
 		//if statement to check if collision
-		if(!colU) {
 		if (e.getKeyCode()==87) {
-			p.up();
+			if(!colU) {
+				p.up();
+			}
 			
 			
-		}
+			
 		}
 		
-		if(!colL) {
+		
+		
 		//a
 		if (e.getKeyCode()==65) {
-			p.left();
+			if(!colL) {
+				p.left();
+			}
 			
 			
-		}
+			
+		
 		}
 		
-		if(!colD) {
+		
 		//s
 		if (e.getKeyCode()==83) {
-			p.down();
+			if(!colD) {
+				p.down();
+			}
+			
 		
 			
-		}
+		
 		}
 		
 		//d
 		if (e.getKeyCode()==68) {
-			p.right();
+			if(!colR) {
+				p.right();
+			}
+			
 			
 			
 		}

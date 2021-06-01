@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class Player {
 	private int x,y,width,height,xVel,yVel;
@@ -53,34 +54,55 @@ public class Player {
 		return tempImage;
 	}
 	
-	public void pickUp(Tile[][] room) {
+	public void pickUp(ArrayList<Item> items) {
 		//looking up and something above?
 		System.out.println("Method activated");
 		System.out.println(direction);
-		if(direction==0&&(room[(int)((y-50)/50)][(int)(x/50)].canGrab())){
-			isHolding = true;
-			room[(y-50)/50][(int)(x/50)].setBeingHeld(true);
-			System.out.println("Picked up");
-		}
-		//looking right?
-		else if(direction==1&&(room[(int)(y/50)][((int)(x+50)/50)].canGrab())){
-			isHolding = true;
-			room[y/50][(x+50)/50].setBeingHeld(true);
-			System.out.println("Picked right");
-		}
-		//looking down?
-		else if(direction==2&&(room[(int)((y+50)/50)][(int)(x/50)].canGrab())){
-			isHolding = true;
-			room[(y+50)/50][x/50].setBeingHeld(true);
-			System.out.println("Picked down");
-		}		
-		//looking left?
-		else if(direction==3&&(room[(int)(y/50)][(int)((x-50)/50)].canGrab())){
-			isHolding = true;	
-			room[y/50][(x-50)/50].setBeingHeld(true);
-			System.out.println("Picked left");
-		}
 		
+		//if we are not holding something already
+		if(!isHolding) {
+			//for every item in our arraylist
+			for(Item i:items) {
+				//if we are intersecting with an item
+				if(i.getRect().intersects(getRect())) {
+					if(direction==0&&(i.getY()<y)){
+						isHolding = true;
+						i.setBeingHeld(true);
+						System.out.println("Picked up");
+					}
+					//looking right?
+					else if(direction==1&&(i.getX()>x)){
+						isHolding = true;
+						i.setBeingHeld(true);
+						System.out.println("Picked right");
+					}
+					//looking down?
+					else if(direction==2&&(i.getY()>y)){
+						isHolding = true;
+						i.setBeingHeld(true);
+						System.out.println("Picked down");
+					}		
+					//looking left?
+					else if(direction==3&&(i.getX()<x)){
+						isHolding = true;
+						i.setBeingHeld(true);
+						System.out.println("Picked left");
+					}
+					
+				}
+			}
+		
+		}
+		else {
+			//if we are holding something
+			isHolding = false;
+			for(Item i:items) {
+				//find the one we are holding
+				if(i.beingHeld) {
+					i.setBeingHeld(false);
+				}
+			}
+		}
 	}
 	
 	public void right() {

@@ -16,12 +16,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class Game extends JPanel implements ActionListener, KeyListener {
 	//800x600
 	//16x12 50 pixel tiles
 	private Player p = new Player(200,300);
     private Tile[][] room = new Tile[12][16];
+    private ArrayList<Item> items = new ArrayList<Item>();
     private boolean title = true;
     private int level = 0;
     private boolean colR,colL,colU,colD;
@@ -43,6 +45,12 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 					room[i][j].paint(g);
 				}
 			}
+			//item paint
+			for(Item i:items) {
+				i.paint(g);
+			}
+			
+			
 			//level selector
 			if(level==0) {
 				
@@ -69,7 +77,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				
 				room[2][4] = new Sink(4,2,p);
 				
-				room[4][4] = new Plate(4,4,p);
+				
 				
 			}
 			else if (level==2) {
@@ -216,7 +224,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				
 			}
 		}
-		
+		items.add(new Plate(100,300,p));
 		t.start();
 		frame.getContentPane().setBackground(Color.black);
 		frame.setVisible(true);
@@ -224,10 +232,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
 
 
-
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println()
+		System.out.println();
 		System.out.println(e.getKeyCode());
 		//w
 		
@@ -272,7 +279,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		
 		//e
 		if(e.getKeyCode()==69) {
-			p.pickUp(room);
+			p.pickUp(items);
 			System.out.println("E is pressed");
 		}
 		
@@ -294,6 +301,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		if(e.getKeyCode()==65||e.getKeyCode()==68) {
 			p.stopX();
 		}
+		colD=false;
+		colU=false;
+		colR=false;
+		colL=false;
 	}
 
 

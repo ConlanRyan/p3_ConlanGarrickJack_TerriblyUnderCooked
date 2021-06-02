@@ -37,7 +37,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			System.out.println(": "+items.get(i).beingHeld);
 		}
 		if (title) {
-			
+			//test
 			g.drawImage(getImage("title.png"),0,0,800,600,null);
 			g.setFont(new Font("courier",30,30));
 			g.setColor(new Color(255,255,255));

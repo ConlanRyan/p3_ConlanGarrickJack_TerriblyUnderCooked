@@ -89,7 +89,7 @@ public class Player {
 						i.setBeingHeld(true);
 						System.out.println("Picked left");
 					}
-					break;
+				
 				}
 			}
 		
@@ -103,7 +103,7 @@ public class Player {
 					//set it down
 					i.setBeingHeld(false);
 				}
-				break;
+				
 			}
 		}
 	}

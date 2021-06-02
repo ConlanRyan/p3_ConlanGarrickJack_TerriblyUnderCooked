@@ -48,7 +48,9 @@ public class Item {
 			x=p.getX()+xMod;
 			y=p.getY()+yMod;
 		}
-		
+		else {
+			
+		}
 		tx.setToTranslation(x, y);
 		g2.drawImage(getImage(imgName), tx, null);
 		

@@ -14,6 +14,7 @@ public class Player {
 	private boolean collide=false;
 	private boolean isHolding;
 	private int direction;
+	private Item itemBeingHeld;
 	public Player(int x, int y) {
 		this.x=x;
 		this.y=y;
@@ -88,7 +89,7 @@ public class Player {
 						i.setBeingHeld(true);
 						System.out.println("Picked left");
 					}
-					
+					break;
 				}
 			}
 		
@@ -99,8 +100,10 @@ public class Player {
 			for(Item i:items) {
 				//find the one we are holding
 				if(i.beingHeld) {
+					//set it down
 					i.setBeingHeld(false);
 				}
+				break;
 			}
 		}
 	}

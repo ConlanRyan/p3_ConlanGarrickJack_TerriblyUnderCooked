@@ -101,26 +101,44 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 						//tile is to the left
 						p.stopX();
 						colL = true;
+						
+					}
+					else {
+						colL = false;
 					}
 					
-					else if(room[i][j].getX()>p.getX()) {
+					if(room[i][j].getX()>p.getX()) {
 						//tile is to the right
 						p.stopX();
 						colR = true;
 					}
-					else if(room[i][j].getY()+50<=p.getY()) {
+					else {
+						colR = false;
+					}
+					if(room[i][j].getY()+50<=p.getY()) {
 						//player is below
 						p.stopY();
 						colU = true;
 					}
-					
-					else if(room[i][j].getY()>p.getY()) {
+					else {
+						colU = false;
+					}
+					if(room[i][j].getY()>p.getY()) {
 						//player is above
 						p.stopY();
 						colD = true;
 					}
+					else {
+						colD = false;
+					}
 			
 		        }
+				else {
+					colR=false;
+					colU=false;
+					colD=false;
+					colL=false;
+				}
 			}
 		}
 		
@@ -214,6 +232,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			}
 		}
 		items.add(new Plate(100,300,p));
+		items.add(new Food(200,300,"Plated Toast.png",p));
 		t.start();
 		frame.getContentPane().setBackground(Color.black);
 		frame.setVisible(true);
@@ -244,10 +263,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			if(!colL) {
 				p.left();
 			}
-			
-			
-			
-		
 		}
 		
 		
@@ -256,10 +271,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			if(!colD) {
 				p.down();
 			}
-			
-		
-			
-		
 		}
 		
 		//d
@@ -267,9 +278,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			if(!colR) {
 				p.right();
 			}
-			
-			
-			
 		}
 		
 		//space
@@ -280,7 +288,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		//e
 		if(e.getKeyCode()==69) {
 			p.pickUp(items);
-			System.out.println("E is pressed");
 		}
 		
 		if(e.getKeyCode()==84) {
@@ -301,10 +308,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		if(e.getKeyCode()==65||e.getKeyCode()==68) {
 			p.stopX();
 		}
-		colD=false;
-		colU=false;
-		colR=false;
-		colL=false;
+		
 	}
 
 

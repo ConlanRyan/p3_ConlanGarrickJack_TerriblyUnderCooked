@@ -26,7 +26,11 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     private int level = 0;
     private boolean colR,colL,colU,colD;
     private int count=0, seconds=0;
-    
+    private playMusic musicPlayer;
+    public void Music() {
+    	musicPlayer = new playMusic("title");
+		playMusic.main(null);
+    }
 	public void paint(Graphics g) {
 		level=1;
 		super.paintComponent(g); // do not remove
@@ -34,6 +38,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			g.drawImage(getImage("title.png"),0,0,800,600,null);
 			g.setFont(new Font("courier",30,30));
 			g.setColor(new Color(255,255,255));
+			
+			
 		}
 
 		else {
@@ -163,6 +169,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		frame.add(this);
 		frame.addKeyListener(this);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		Timer t = new Timer(16, this);
 		
 		//LEVEL CREATION
@@ -172,12 +179,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				
 			}
 		}
-		
 		t.start();
 		frame.getContentPane().setBackground(Color.black);
 		frame.setVisible(true);
 	} // end of MainFrame
-
 
 
 

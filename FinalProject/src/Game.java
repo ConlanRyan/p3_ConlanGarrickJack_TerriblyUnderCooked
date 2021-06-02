@@ -27,7 +27,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     private boolean title = true;
     private int level = 0;
     private boolean colR,colL,colU,colD;
-    private int count=0, seconds=0;
+    private int count=0, seconds=0,num=0;
+  
     
 	public void paint(Graphics g) {
 		level=1;
@@ -69,15 +70,28 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				horizLine(2,4,9,"counter");
 				vertLine(6,9,2,"counter");
 				room[4][2] = new Counter(2,4,p);
+				room[9][12] = new Counter(12,9,p);
 				
-				//stoves
-				room[2][9] = new Stove(9,2,p);
-				room[2][11] = new Stove(11,2,p);
-				room[9][8] = new Stove(8,9,p);
+				//plates in their starting locations
+				room[2][8] = new Counter(8,2,p);
+				room[2][10] = new Counter(10,2,p);
+				room[2][12] = new Counter(12,2,p);
 				
-				room[2][4] = new Sink(4,2,p);
+				//cutting Board
+				room[9][4] = new CuttingBoard(4,9,p);
+				room[9][6] = new CuttingBoard(6,9,p);
 				
+				//ingredients
+				room[3][2] = new IngredientStation(2,3, p,"Spagetti Box.png");
+				room[5][2] = new IngredientStation(2,5,p,"Tomatoes in Crate.png");
 				
+				//delivery space
+				room[4][13] = new DeliverySpace(13,4,p);
+				room[5][13] = new DeliverySpace(13,5,p);
+				
+				//plate spaces
+				room[6][13] = new PlateSpace(13,6,p);
+				room[2][5] = new PlateSpace(5,2,p);
 				
 			}
 			else if (level==2) {
@@ -92,45 +106,20 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			int mouseX = ((int)MouseInfo.getPointerInfo().getLocation().getX())-10;
 			
 		}
-		for(int i=0;i<room.length;i++) {
-			for(int j =0;j<room[0].length;j++) {
-				if(p.getRect().intersects(room[i][j].getRect())&&room[i][j].canCollide()) {
-					System.out.println("Collide");
-					//accounting for the width
-					if(room[i][j].getX()+50<=p.getX()) {
-						//tile is to the left
-						p.stopX();
-						colL = true;
-						
-					}
-					else {
-						colL = false;
-					}
-					
-					if(room[i][j].getX()>p.getX()) {
-						//tile is to the right
-						p.stopX();
-						colR = true;
-					}
-					else {
-						colR = false;
-					}
-					if(room[i][j].getY()+50<=p.getY()) {
-						//player is below
-						p.stopY();
-						colU = true;
-					}
-					else {
-						colU = false;
-					}
-					if(room[i][j].getY()>p.getY()) {
-						//player is above
-						p.stopY();
-						colD = true;
-					}
-					else {
-						colD = false;
-					}
+		
+		
+		//testing timer
+		
+		//for each timer you add you must update the global num variable!!! 
+		
+		//format: cookingTimer(g,*x location,*y location,number of timers,number of seconds)
+		
+			//num=1;
+			//cookingTimer(g,room[9][10].getX(),room[9][10].getY(),num,5);
+			//cookingTimer(g,room[9][8].getX(),room[9][8].getY(),num,10);
+			//cookingTimer(g,room[2][11].getX(),room[2][11].getY());
+			//cookingTimer(g,room[10][9].getX()-50,room[10][9].getY()-50);
+
 			
 		        }
 				else {
@@ -231,8 +220,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				
 			}
 		}
-		items.add(new Plate(100,300,p));
-		items.add(new Food(200,300,"Plated Toast.png",p));
+		
+		items.add(new Plate(400,100,p));
+		items.add(new Plate(500,100,p));
+		items.add(new Plate(600,100,p));
 		t.start();
 		frame.getContentPane().setBackground(Color.black);
 		frame.setVisible(true);
@@ -336,6 +327,35 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
 		
 	}
+	public void cookingTimer(Graphics g,int x , int y, int num, int time) {
+		count+=20/num;
+		if(seconds<time) {
+		if(count%(1000)==0) {
+			seconds++;
+			System.out.println(seconds);
+		}
+			
+			
+		if(seconds%4==0) {
+			
+			g.drawImage(getImage("UpTimer.png"),x,y,50,50,null);
+		}else if(seconds%4==1) {
+			
+			g.drawImage(getImage("RightTimer.png"),x,y,50,50,null);
+		}else if(seconds%4==2) {
+			
+			g.drawImage(getImage("DownTimer.png"),x,y,50,50,null);
+		}else{
+			
+			g.drawImage(getImage("LeftTimer.png"),x,y,50,50,null);
+		}
+		}
+		
+		
+	}
+	
+	
+	
 	private Image getImage(String path) {
 		Image tempImage = null;
 		try {

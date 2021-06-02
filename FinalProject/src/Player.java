@@ -36,7 +36,7 @@ public class Player {
 		Graphics2D g2 = (Graphics2D) g;
 		
 		g2.drawImage(getImage("player.png"), tx, null);
-		
+		System.out.println(isHolding);
 		tx.setToTranslation(x, y);
 		
 	}
@@ -217,7 +217,7 @@ public class Player {
 	}
 	/* Helper function for collision detection later */
 	public Rectangle getRect() {
-		Rectangle temp = new Rectangle(x-1,y-1,width+2,height+2);
+		Rectangle temp = new Rectangle(x,y,width,height);
 		return temp;
 	}
 }

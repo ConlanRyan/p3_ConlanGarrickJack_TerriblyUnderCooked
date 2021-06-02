@@ -45,13 +45,7 @@ public class Tile {
 	public boolean canCollide() {
 		return collide;
 	}
-	public int getX() {
-		return x;
-		
-	}
-	public int getY() {
-		return y;
-	}
+	
 	// converts image to make it drawable in paint
 	protected Image getImage(String path) {
 		Image tempImage = null;
@@ -69,5 +63,12 @@ public class Tile {
 		Rectangle temp = new Rectangle(x,y,width,height);
 		return temp;
 	}
-	
+
+	public int getX() {
+		return x;
+	}
+	public int getY(){
+		return y;
+	}
+
 }

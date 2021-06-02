@@ -5,13 +5,16 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class Player {
 	private int x,y,width,height,xVel,yVel;
 	private boolean display;
-	private int speed=5;
+	private int speed=10;
 	private boolean collide=false;
-	
+	private boolean isHolding;
+	private int direction;
+	private Item itemBeingHeld;
 	public Player(int x, int y) {
 		this.x=x;
 		this.y=y;
@@ -19,6 +22,8 @@ public class Player {
 		yVel=0;
 		width = 50;
 		height = 50;
+		isHolding = false;
+		direction = 0;
 	}
 	
 	private AffineTransform tx = AffineTransform.getTranslateInstance(x, y);
@@ -31,11 +36,13 @@ public class Player {
 		Graphics2D g2 = (Graphics2D) g;
 		
 		g2.drawImage(getImage("player.png"), tx, null);
-		
+		System.out.println(isHolding);
 		tx.setToTranslation(x, y);
 		
 	}
-	
+	public int direction(){
+		return direction;
+	}
 	// converts image to make it drawable in paint
 	private Image getImage(String path) {
 		Image tempImage = null;
@@ -48,18 +55,74 @@ public class Player {
 		return tempImage;
 	}
 	
+	public void pickUp(ArrayList<Item> items) {
+		//looking up and something above?
+		System.out.println("Method activated");
+		System.out.println(direction);
+		
+		//if we are not holding something already
+		if(!isHolding) {
+			//for every item in our arraylist
+			for(Item i:items) {
+				//if we are intersecting with an item
+				if(i.getRect().intersects(getRect())) {
+					if(direction==0&&(i.getY()<y)){
+						isHolding = true;
+						i.setBeingHeld(true);
+						System.out.println("Picked up");
+					}
+					//looking right?
+					else if(direction==1&&(i.getX()>x)){
+						isHolding = true;
+						i.setBeingHeld(true);
+						System.out.println("Picked right");
+					}
+					//looking down?
+					else if(direction==2&&(i.getY()>y)){
+						isHolding = true;
+						i.setBeingHeld(true);
+						System.out.println("Picked down");
+					}		
+					//looking left?
+					else if(direction==3&&(i.getX()<x)){
+						isHolding = true;
+						i.setBeingHeld(true);
+						System.out.println("Picked left");
+					}
+				
+				}
+			}
+		
+		}
+		else {
+			//if we are holding something
+			isHolding = false;
+			for(Item i:items) {
+				//find the one we are holding
+				if(i.beingHeld) {
+					//set it down
+					i.setBeingHeld(false);
+				}
+				
+			}
+		}
+	}
 	
 	public void right() {
 		xVel=speed;
+		direction = 1;
 	}
 	public void left() {
 		xVel=-speed;
+		direction = 3;
 	}
     public void up() {
     	yVel=-speed;
+    	direction = 0;
 	}
 	public void down() {
 		yVel=speed;
+		direction = 2;
 	}
 	
 	public void stopRight() {
@@ -154,7 +217,7 @@ public class Player {
 	}
 	/* Helper function for collision detection later */
 	public Rectangle getRect() {
-		Rectangle temp = new Rectangle(x,y,width,height);
+		Rectangle temp = new Rectangle(x-1,y-1,width+2,height+2);
 		return temp;
 	}
 }

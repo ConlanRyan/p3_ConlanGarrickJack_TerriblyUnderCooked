@@ -33,6 +33,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	public void paint(Graphics g) {
 		level=1;
 		super.paintComponent(g); // do not remove
+		for(int i =0;i<items.size();i++) {
+			System.out.println(": "+items.get(i).beingHeld);
+		}
 		if (title) {
 			
 			g.drawImage(getImage("title.png"),0,0,800,600,null);
@@ -76,6 +79,17 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				room[2][8] = new Counter(8,2,p);
 				room[2][10] = new Counter(10,2,p);
 				room[2][12] = new Counter(12,2,p);
+
+				
+				//stoves
+				room[2][9] = new Stove(9,2,p);
+				room[2][11] = new Stove(11,2,p);
+				room[9][8] = new Stove(8,9,p);
+				room[9][10]= new Stove(10,9,p);
+				
+				//sink for washing dishes
+				room[2][4] = new Sink(4,2,p);
+	
 				
 				//cutting Board
 				room[9][4] = new CuttingBoard(4,9,p);
@@ -92,6 +106,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				//plate spaces
 				room[6][13] = new PlateSpace(13,6,p);
 				room[2][5] = new PlateSpace(5,2,p);
+
+				room[2][5] = new PlateSpace(5,2,p);
+
 				
 			}
 			else if (level==2) {
@@ -104,11 +121,12 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			p.paint(g);
 			int mouseY = ((int)MouseInfo.getPointerInfo().getLocation().getY())-35;
 			int mouseX = ((int)MouseInfo.getPointerInfo().getLocation().getX())-10;
-			
 		}
 		
 		
 		//testing timer
+	//testing timer
+
 		
 		//for each timer you add you must update the global num variable!!! 
 		
@@ -120,44 +138,35 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			//cookingTimer(g,room[2][11].getX(),room[2][11].getY());
 			//cookingTimer(g,room[10][9].getX()-50,room[10][9].getY()-50);
 
-			
-		        }
-				else {
-					colR=false;
-					colU=false;
-					colD=false;
-					colL=false;
-				}
-			}
+		
+		//Border collision
+		if(p.getX()+p.getWidth()>640) {
+			p.stopX();
+			colR=true;
+			//p.setSpeed(0);
+		}else {
+			colR=false;
+		}
+		if(p.getX()<160) {
+			p.stopX();
+			colL=true;
+		}else {
+		 colL=false;
+		}
+		if(p.getY()+p.getHeight()>440) {
+			p.stopY();
+			colD=true;
+		}else {
+			colD=false;
+		}
+		if(p.getY()<160) {
+			p.stopY();
+			colU=true;
+		}else {
+			colU=false;
+
 		}
 		
-//		//Border collision
-//		if(p.getX()+p.getWidth()>795) {
-//			p.stopX();
-//			colR=true;
-//			//p.setSpeed(0);
-//		}else {
-//			colR=false;
-//		}
-//		if(p.getX()<10) {
-//			p.stopX();
-//			colL=true;
-//		}else {
-//			colL=false;
-//		}
-//		if(p.getY()+p.getHeight()>590) {
-//			p.stopY();
-//			colD=true;
-//		}else {
-//			colD=false;
-//		}
-//		if(p.getY()<10) {
-//			p.stopY();
-//			colU=true;
-//		}else {
-//			colU=false;
-//		}
-//		
 	}
 
 	public void horizLine(int x, int x2, int y, String type) {
@@ -220,10 +229,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				
 			}
 		}
-		
+		items.add(new Plate(600,100,p));
 		items.add(new Plate(400,100,p));
 		items.add(new Plate(500,100,p));
-		items.add(new Plate(600,100,p));
+		
 		t.start();
 		frame.getContentPane().setBackground(Color.black);
 		frame.setVisible(true);
@@ -318,15 +327,15 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		repaint();
-
 		for(int i=0;i<room.length;i++) {
 			for(int j=0;j<room[0].length;j++) {
 				room[i][j].update(seconds);
 			}
 		}
+	}
 
 		
-	}
+	
 	public void cookingTimer(Graphics g,int x , int y, int num, int time) {
 		count+=20/num;
 		if(seconds<time) {

@@ -217,7 +217,7 @@ public class Player {
 	}
 	/* Helper function for collision detection later */
 	public Rectangle getRect() {
-		Rectangle temp = new Rectangle(x,y,width,height);
+		Rectangle temp = new Rectangle(x-1,y-1,width+2,height+2);
 		return temp;
 	}
 }

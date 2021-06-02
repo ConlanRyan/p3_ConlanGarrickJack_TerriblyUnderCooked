@@ -25,7 +25,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     private boolean title = true;
     private int level = 0;
     private boolean colR,colL,colU,colD;
-    private int count=0, seconds=0,num=2;
+    private int count=0, seconds=0,num=0;
   
     
 	public void paint(Graphics g) {
@@ -63,6 +63,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				horizLine(2,4,9,"counter");
 				vertLine(6,9,2,"counter");
 				room[4][2] = new Counter(2,4,p);
+				room[9][12] = new Counter(12,9,p);
 				
 				//stoves
 				room[2][9] = new Stove(9,2,p);
@@ -81,6 +82,18 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				//cutting Board
 				room[9][4] = new CuttingBoard(4,9,p);
 				room[9][6] = new CuttingBoard(6,9,p);
+				
+				//ingredients
+				room[3][2] = new IngredientStation(2,3, p,"Spagetti Box.png");
+				room[5][2] = new IngredientStation(2,5,p,"Tomatoes in Crate.png");
+				
+				//delivery space
+				room[4][13] = new DeliverySpace(13,4,p);
+				room[5][13] = new DeliverySpace(13,5,p);
+				
+				//plate spaces
+				room[6][13] = new PlateSpace(13,6,p);
+				room[2][5] = new PlateSpace(5,2,p);
 				
 			}
 			else if (level==2) {
@@ -102,6 +115,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		
 		//format: cookingTimer(g,*x location,*y location,number of timers,number of seconds)
 		
+			//num=1;
 			//cookingTimer(g,room[9][10].getX(),room[9][10].getY(),num,5);
 			//cookingTimer(g,room[9][8].getX(),room[9][8].getY(),num,10);
 			//cookingTimer(g,room[2][11].getX(),room[2][11].getY());

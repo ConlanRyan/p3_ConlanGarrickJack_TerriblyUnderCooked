@@ -6,7 +6,7 @@ import java.awt.geom.AffineTransform;
 import java.net.URL;
 
 public class IngredientStation extends Tile{
-	
+	private Food f;
 	public IngredientStation(int x,int y, Player p, String imgName) {
 		super(x,y,p);
 		collide = true;

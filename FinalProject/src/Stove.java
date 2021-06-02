@@ -12,8 +12,7 @@ public class Stove extends Tile {
 	
 
 	private boolean timer=false;
-	private int cookingLimit=0;
-	private boolean cooking = false;
+
 	public Stove(int x, int y, Player p) {
 		super(x, y, p);
 
@@ -21,8 +20,8 @@ public class Stove extends Tile {
 		collide = true;
 	}
 
-	
-	
-	
+	public void setCookingLimit() {
+	}
+
 
 }

@@ -1,6 +1,6 @@
 import java.awt.Graphics;
 
-public class Food extends Tile{
+public class Food extends Item{
 	boolean canCook;
 	boolean cooked;
 	boolean canBoil;
@@ -11,9 +11,7 @@ public class Food extends Tile{
 	boolean chopped;
 	
 	public Food(int x, int y, String imgName, Player p) {
-		super(x, y,p);
-		collide = false;
-		canGrab = true; 
+		super(x,y,p);
 		this.imgName=imgName;
 	}
 	public void paint(Graphics g) {

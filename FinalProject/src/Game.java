@@ -38,13 +38,11 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			g.drawImage(getImage("title.png"),0,0,800,600,null);
 			g.setFont(new Font("courier",30,30));
 			g.setColor(new Color(255,255,255));
+			g.drawString("Press T to begin",33,400);
 			
-			
-		}
-
+		} 
 		else {
 			//room paint
-
 			for(int i=0;i<room.length;i++) {
 				for(int j=0;j<room[0].length;j++) {
 					room[i][j].paint(g);
@@ -89,8 +87,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			p.paint(g);
 			int mouseY = ((int)MouseInfo.getPointerInfo().getLocation().getY())-35;
 			int mouseX = ((int)MouseInfo.getPointerInfo().getLocation().getX())-10;
-			
-		}
+		
+		}	
 		//Border collision
 		if(p.getX()+p.getWidth()>795) {
 			p.stopX();

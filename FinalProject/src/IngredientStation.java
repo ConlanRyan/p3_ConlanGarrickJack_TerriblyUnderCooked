@@ -30,7 +30,9 @@ public class IngredientStation extends Tile{
 		
 	}
 	public Food grabFromBox() {
+		System.out.println(f.getImageName());
 		return f;
+		
 	}
 	protected Image getImage(String path) {
 		Image tempImage = null;

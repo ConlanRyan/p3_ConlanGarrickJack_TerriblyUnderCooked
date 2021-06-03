@@ -96,7 +96,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				room[9][6] = new CuttingBoard(6,9,p);
 				
 				//ingredients
-				room[3][2] = new IngredientStation(2,3,new Food(0,0,"Spaghetti Box.png",p),p,"Spagetti Box.png");
+				room[3][2] = new IngredientStation(2,3,new Food(0,0,"Spagetti Box.png",p),p,"Spagetti Box.png");
 				room[5][2] = new IngredientStation(2,5,new Food(0,0,"Whole Tomato.png",p),p,"Tomatoes in Crate.png");
 				
 				//delivery space

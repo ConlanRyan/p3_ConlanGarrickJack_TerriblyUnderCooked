@@ -62,16 +62,16 @@ public class Player {
 		
 		//if we are not holding something already
 		if(!isHolding) {
+			
 			//ingredient grab 
 			for(int i=0;i<room.length;i++) {
 				for(int j=0;j<room[0].length;j++) {
-					if(room[i][j].canGrabIngredientFrom) {
-						items.add(((IngredientStation)(room[i][j])).grabFromBox());
+					if(room[i][j].canGrabIngredientFrom&&room[i][j].getRect().intersects(getRect())) {
+						items.add(0,((IngredientStation)(room[i][j])).grabFromBox());
 						items.get(0).setBeingHeld(true);
 					}
 				}
 			}
-			
 			
 			//for every item in our arraylist
 			for(Item i:items) {

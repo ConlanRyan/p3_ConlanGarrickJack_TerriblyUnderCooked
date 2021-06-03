@@ -14,6 +14,7 @@ public class Food extends Item{
 	public Food(int x, int y, String imgName, Player p) {
 		super(x,y,p);
 		this.imgName=imgName;
+		canHoldFood=false;
 	}
 	
 	public void paint(Graphics g) {

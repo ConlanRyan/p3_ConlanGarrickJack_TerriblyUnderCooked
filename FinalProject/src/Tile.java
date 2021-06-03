@@ -15,7 +15,6 @@ public class Tile {
 	protected String imgName;
 	protected int seconds=0;
 	protected Player p;
-	protected boolean canGrabIngredientFrom;
 	public Tile(int x, int y, Player p) {
 		collide=false;
 		imgName = "Tile.png";

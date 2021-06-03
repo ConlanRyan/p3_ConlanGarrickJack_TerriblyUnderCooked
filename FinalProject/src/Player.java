@@ -66,8 +66,10 @@ public class Player {
 			//ingredient grab 
 			for(int i=0;i<room.length;i++) {
 				for(int j=0;j<room[0].length;j++) {
-					if(room[i][j].canGrabIngredientFrom&&room[i][j].getRect().intersects(getRect())) {
+					if(room[i][j].getClass().getName().equals("IngredientStation")&&room[i][j].getRect().intersects(getRect())) {
+						//add that item immedietly to the arraylist, so it will paint itself
 						items.add(0,((IngredientStation)(room[i][j])).grabFromBox());
+						//immedietly tell that we are picking it up
 						items.get(0).setBeingHeld(true);
 					}
 				}
@@ -106,16 +108,30 @@ public class Player {
 			
 		
 		}
+		
+		//if we are holding something
 		else {
-			//if we are holding something
-			isHolding = false;
-			for(Item i:items) {
-				//find the one we are holding
-				if(i.beingHeld) {
-					//set it down
-					i.setBeingHeld(false);
-				}
+			//if we are near an oven, and the food in that oven is cooked
+			//and we are holding a plate, then put the cooked food on our plate
+			for(int i=0;i<room.length;i++) {
+				for(int j=0;j<room[0].length;j++) {
+					if(room[i][j].getRect().intersects(getRect())&&room[i][j].getClass().getName().equals("Stove")) {
+						
+					}
 				
+			}
+			
+			
+			
+			//go through all items
+			for(Item item:items) {
+				//find the one we are holding
+				if(item.beingHeld) {
+					//set it down
+					item.setBeingHeld(false);
+					isHolding = false;
+				}
+			}
 			}
 		}
 	}

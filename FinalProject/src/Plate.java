@@ -6,6 +6,7 @@ public class Plate extends Item {
 	public Plate(int x, int y, Player p) {
 		super(x,y,p);
 		imgName = "plate.png";
+		canHoldFood=true;
 	}
 	public void paint(Graphics g) {
 		super.paint(g);

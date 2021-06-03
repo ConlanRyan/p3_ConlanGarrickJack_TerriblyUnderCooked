@@ -12,6 +12,7 @@ public class Item {
 	protected Player p;
 	protected String imgName;
 	private int width,height;
+	protected boolean canHoldFood;
 	protected AffineTransform tx = AffineTransform.getTranslateInstance(x, y);
 	// draw the affine transform
 	public Item(int x, int y, Player p) {

@@ -26,11 +26,11 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     private int level = 0;
     private boolean colR,colL,colU,colD;
     private int count=0, seconds=0;
-    private playMusic musicPlayer;
+    /*private playMusic musicPlayer;
     public void Music() {
     	musicPlayer = new playMusic("title");
 		playMusic.main(null);
-    }
+    }*/
 	public void paint(Graphics g) {
 		level=1;
 		super.paintComponent(g); // do not remove

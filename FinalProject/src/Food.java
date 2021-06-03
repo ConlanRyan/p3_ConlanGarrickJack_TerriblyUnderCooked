@@ -9,11 +9,13 @@ public class Food extends Item{
 	boolean toasted;
 	boolean canChop;
 	boolean chopped;
-	
+	boolean plated; 
+
 	public Food(int x, int y, String imgName, Player p) {
 		super(x,y,p);
 		this.imgName=imgName;
 	}
+	
 	public void paint(Graphics g) {
 		super.paint(g);
 		

@@ -96,8 +96,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				room[9][6] = new CuttingBoard(6,9,p);
 				
 				//ingredients
-				room[3][2] = new IngredientStation(2,3,p,"Spagetti Box.png");
-				room[5][2] = new IngredientStation(2,5,p,"Tomatoes in Crate.png");
+				room[3][2] = new IngredientStation(2,3,new Food(0,0,"Spaghetti Box.png",p),p,"Spagetti Box.png");
+				room[5][2] = new IngredientStation(2,5,new Food(0,0,"Whole Tomato.png",p),p,"Tomatoes in Crate.png");
 				
 				//delivery space
 				room[4][13] = new DeliverySpace(13,4,p);
@@ -117,7 +117,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			}
 			
 			
-			grid(g);
+			//grid(g);
 			p.paint(g);
 			int mouseY = ((int)MouseInfo.getPointerInfo().getLocation().getY())-35;
 			int mouseX = ((int)MouseInfo.getPointerInfo().getLocation().getX())-10;
@@ -287,7 +287,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		
 		//e
 		if(e.getKeyCode()==69) {
-			p.pickUp(items);
+			p.pickUp(items,room);
+			
 		}
 		
 		if(e.getKeyCode()==84) {

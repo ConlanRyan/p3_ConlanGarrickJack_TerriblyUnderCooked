@@ -55,13 +55,24 @@ public class Player {
 		return tempImage;
 	}
 	
-	public void pickUp(ArrayList<Item> items) {
+	public void pickUp(ArrayList<Item> items, Tile[][] room) {
 		//looking up and something above?
 		System.out.println("Method activated");
 		System.out.println(direction);
 		
 		//if we are not holding something already
 		if(!isHolding) {
+			//ingredient grab 
+			for(int i=0;i<room.length;i++) {
+				for(int j=0;j<room[0].length;j++) {
+					if(room[i][j].canGrabIngredientFrom) {
+						items.add(((IngredientStation)(room[i][j])).grabFromBox());
+						items.get(0).setBeingHeld(true);
+					}
+				}
+			}
+			
+			
 			//for every item in our arraylist
 			for(Item i:items) {
 				//if we are intersecting with an item
@@ -92,6 +103,7 @@ public class Player {
 				
 				}
 			}
+			
 		
 		}
 		else {

@@ -7,11 +7,13 @@ import java.net.URL;
 
 public class IngredientStation extends Tile{
 	private Food f;
-	public IngredientStation(int x,int y, Food f, Player p) {
+	public IngredientStation(int x,int y, Food f, Player p, String imgName) {
 		super(x,y,p);
 		collide = true;
-		imgName = "ingredientStation.png";
+		this.imgName = imgName;
 		this.f=f;
+		canGrabIngredientFrom=true;
+		
 	}
 	protected AffineTransform tx = AffineTransform.getTranslateInstance(x, y);
 	// draw the affine transform
@@ -24,7 +26,12 @@ public class IngredientStation extends Tile{
 		tx.setToTranslation(x, y);
 		
 		g2.drawImage(getImage(imgName), tx, null);
-		g2.drawImage(getImage(f.getImageName()), tx, null);
+		
+		
+	}
+	public Food grabFromBox() {
+		System.out.println(f.getImageName());
+		return f;
 		
 	}
 	protected Image getImage(String path) {

@@ -33,9 +33,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	public void paint(Graphics g) {
 		level=1;
 		super.paintComponent(g); // do not remove
-		for(int i =0;i<items.size();i++) {
-			System.out.println(": "+items.get(i).beingHeld);
-		}
+
 		if (title) {
 			//test
 			g.drawImage(getImage("title.png"),0,0,800,600,null);
@@ -242,10 +240,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println();
-		System.out.println(e.getKeyCode());
 		//w
-		
 		//if statement to check if collision
 		if (e.getKeyCode()==87) {
 			if(!colU) {
@@ -342,7 +337,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		if(seconds<time) {
 		if(count%(1000)==0) {
 			seconds++;
-			System.out.println(seconds);
 		}
 			
 			

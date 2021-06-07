@@ -14,6 +14,9 @@ public class Plate extends Item {
 			f.paint(g);
 		}
 	}
+	public boolean empty() {
+		return(foods.size()==0);
+	}
 	public void add(Food f) {
 		foods.add(0,f);
 	}

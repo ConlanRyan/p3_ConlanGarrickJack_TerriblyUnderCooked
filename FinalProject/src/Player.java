@@ -14,6 +14,7 @@ public class Player {
 	private boolean collide=false;
 	private boolean isHolding;
 	private int direction;
+	private boolean plate;
 	private Item itemBeingHeld;
 	public Player(int x, int y) {
 		this.x=x;
@@ -24,6 +25,8 @@ public class Player {
 		height = 50;
 		isHolding = false;
 		direction = 0;
+		plate = false;
+		itemBeingHeld = new Item(0, 0, null);
 	}
 	
 	private AffineTransform tx = AffineTransform.getTranslateInstance(x, y);
@@ -56,8 +59,6 @@ public class Player {
 	}
 	
 	public void pickUp(ArrayList<Item> items, Tile[][] room) {
-		//looking up and something above?
-		System.out.println("Method activated");
 		System.out.println(direction);
 		
 		//if we are not holding something already
@@ -79,30 +80,32 @@ public class Player {
 			for(Item i:items) {
 				//if we are intersecting with an item
 				if(i.getRect().intersects(getRect())) {
+					itemBeingHeld=i;
 					if(direction==0&&(i.getY()<y)){
 						isHolding = true;
 						i.setBeingHeld(true);
-						System.out.println("Picked up");
 					}
 					//looking right?
 					else if(direction==1&&(i.getX()>x)){
 						isHolding = true;
 						i.setBeingHeld(true);
-						System.out.println("Picked right");
 					}
 					//looking down?
 					else if(direction==2&&(i.getY()>y)){
 						isHolding = true;
 						i.setBeingHeld(true);
-						System.out.println("Picked down");
 					}		
 					//looking left?
 					else if(direction==3&&(i.getX()<x)){
 						isHolding = true;
 						i.setBeingHeld(true);
-						System.out.println("Picked left");
 					}
-				
+					if(i.getClass().getName().equals("Plate")) {
+						plate = true;
+					}
+					else {
+						plate=false;
+					}
 				}
 			}
 			
@@ -116,11 +119,14 @@ public class Player {
 			for(int i=0;i<room.length;i++) {
 				for(int j=0;j<room[0].length;j++) {
 					if(room[i][j].getRect().intersects(getRect())&&room[i][j].getClass().getName().equals("Stove")) {
-						
+						//if the thing you're holding is a plate that is empty
+						//no putting in an oven
+						if(!(plate&&((Plate)(itemBeingHeld)).empty())) {
+							itemBeingHeld.setBeingHeld(false);
+						}
 					}
 				
 			}
-			
 			
 			
 			//go through all items

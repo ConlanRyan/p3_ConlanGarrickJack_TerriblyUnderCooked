@@ -23,7 +23,7 @@ public class Tile {
 		width = 50;
 		height = 50;
 		this.p=p;
-		canGrabIngredientFrom=false;
+
 	}
 	public void update(int timer) {
 		seconds=timer;

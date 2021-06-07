@@ -20,7 +20,7 @@ public class Stove extends Tile {
 		collide = true;
 	}
 
-	public void setCookingLimit() {
-	}
+	
+	
 }
 

@@ -49,7 +49,14 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			}
 			//item paint
 			for(Item i:items) {
-				i.paint(g);
+				if(i.getClass().getName().equals("Food")&&((Food)(i)).plated) {
+					//if a food is plated it is already going to be painted by
+					//the plate itself
+				}
+				else {
+					i.paint(g);
+				}
+				
 			}
 			
 			
@@ -94,7 +101,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				room[9][6] = new CuttingBoard(6,9,p);
 				
 				//ingredients
-				room[3][2] = new IngredientStation(2,3,new Food(0,0,"Spagetti Box.png",p),p,"Spagetti Box.png");
+				room[3][2] = new IngredientStation(2,3,new Food(0,0,"Raw Spagetti.png",p),p,"Spagetti Box.png");
 				room[5][2] = new IngredientStation(2,5,new Food(0,0,"Whole Tomato.png",p),p,"Tomatoes in Crate.png");
 				
 				//delivery space

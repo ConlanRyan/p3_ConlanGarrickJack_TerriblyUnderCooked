@@ -24,7 +24,7 @@ public class Plate extends Item {
 		return(foods.size()==0);
 	}
 	public void add(Food f) {
-		foods.add(0,f);
+		foods.add(f);
 		f.setBeingHeld(true);
 	}
 	public Food remove() {

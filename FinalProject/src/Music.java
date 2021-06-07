@@ -1,6 +1,7 @@
 
 
 import java.io.File;
+
 import java.io.IOException;
 
 import javax.sound.sampled.AudioFormat;
@@ -19,7 +20,7 @@ public class Music  implements Runnable  {
 	private AudioInputStream audioStream;
 	private Clip audioClip;
 	private String fn;
-	private boolean loops = false;
+	public boolean loops = false;
 	
 	/**
 	 * Create a music object from a given file name. 
@@ -54,7 +55,14 @@ public class Music  implements Runnable  {
 	 * Stop the music
 	 */
 	public void stop() {
+		loops=false;
 		audioClip.stop();
+		try {
+			t.sleep(1000);	
+		}catch(Exception e) {
+			
+		}
+		
 	}
 	
 	

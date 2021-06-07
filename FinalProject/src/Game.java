@@ -27,30 +27,18 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     private boolean title = true;
     private int level = 0;
     private boolean colR,colL,colU,colD;
-<<<<<<< HEAD
-    private int count=0, seconds=0;
-    /*private playMusic musicPlayer;
-    public void Music() {
-    	musicPlayer = new playMusic("title");
-		playMusic.main(null);
-    }*/
-=======
-    private int count=0, seconds=0,num=0;
-  
-    
->>>>>>> refs/remotes/origin/Conlan
+    private int count=0, seconds=0, num=0;
+    private Music titleMusic = new Music("mainMusic.wav", true);
+    private Music levelOne = new Music("level1.wav",false);
+ 
 	public void paint(Graphics g) {
 		level=1;
 		super.paintComponent(g); // do not remove
-<<<<<<< HEAD
-		if (title) {	
-=======
 		for(int i =0;i<items.size();i++) {
 			System.out.println(": "+items.get(i).beingHeld);
 		}
 		if (title) {
 			//test
->>>>>>> refs/remotes/origin/Conlan
 			g.drawImage(getImage("title.png"),0,0,800,600,null);
 			g.setFont(new Font("courier",30,30));
 			g.setColor(new Color(255,255,255));
@@ -130,24 +118,12 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				
 			}
 			
-<<<<<<< HEAD
-
-
-			grid(g);
-			p.paint(g);
-=======
-			
 			//grid(g);
 			p.paint(g);
->>>>>>> refs/remotes/origin/Conlan
 			int mouseY = ((int)MouseInfo.getPointerInfo().getLocation().getY())-35;
-<<<<<<< HEAD
 			int mouseX = ((int)MouseInfo.getPointerInfo().getLocation().getX())-10;
 		
 		}	
-=======
-			int mouseX = ((int)MouseInfo.getPointerInfo().getLocation().getX())-10;
-		}
 		
 		
 		//testing timer
@@ -165,7 +141,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			//cookingTimer(g,room[10][9].getX()-50,room[10][9].getY()-50);
 
 		
->>>>>>> refs/remotes/origin/Conlan
 		//Border collision
 		if(p.getX()+p.getWidth()>640) {
 			p.stopX();
@@ -255,16 +230,16 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				
 			}
 		}
-<<<<<<< HEAD
-=======
+		
 		items.add(new Plate(600,100,p));
 		items.add(new Plate(400,100,p));
 		items.add(new Plate(500,100,p));
-		
->>>>>>> refs/remotes/origin/Conlan
 		t.start();
 		frame.getContentPane().setBackground(Color.black);
 		frame.setVisible(true);
+
+		titleMusic.play();
+		
 	} // end of MainFrame
 
 
@@ -319,8 +294,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			p.pickUp(items,room);
 			
 		}
-		
+		//t
 		if(e.getKeyCode()==84) {
+			titleMusic.stop();
+			titleMusic.stop();
 			title=false;
 		}
 	}
@@ -338,6 +315,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		if(e.getKeyCode()==65||e.getKeyCode()==68) {
 			p.stopX();
 		}
+		if(e.getKeyCode()==84) {
+			
+		}
 		
 	}
 
@@ -347,7 +327,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 

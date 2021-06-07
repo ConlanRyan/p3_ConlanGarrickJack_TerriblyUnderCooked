@@ -2,20 +2,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
-<<<<<<< HEAD
 import java.util.concurrent.TimeUnit;
-import javax.swing.Timer;
-=======
->>>>>>> refs/remotes/origin/Conlan
-import java.util.concurrent.TimeUnit;
-
 import javax.swing.Timer;
 
 public class Stove extends Tile {
-
-	private int count=0;
-	
-
 	private boolean timer=false;
 	private int cookingLimit=0;
 	private boolean cooking = false;
@@ -26,14 +16,8 @@ public class Stove extends Tile {
 		imgName = "stovetop.png";
 		collide = true;
 	}
-<<<<<<< HEAD
 
-
-=======
-
->>>>>>> refs/remotes/origin/Conlan
 	public void setCookingLimit() {
-<<<<<<< HEAD
 		cookingLimit = seconds+10;
 	}
 	public void paint(Graphics g) {
@@ -81,8 +65,4 @@ public class Stove extends Tile {
 		
 	}*/
 }
-=======
-	}
-}
 
->>>>>>> refs/remotes/origin/Conlan

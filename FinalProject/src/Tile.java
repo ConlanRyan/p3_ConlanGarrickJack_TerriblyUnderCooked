@@ -14,13 +14,8 @@ public class Tile {
 	protected boolean collide;
 	protected String imgName;
 	protected int seconds=0;
-<<<<<<< HEAD
-
-	protected Player p;
-=======
 	protected Player p;
 	protected boolean canGrabIngredientFrom;
->>>>>>> refs/remotes/origin/Conlan
 	public Tile(int x, int y, Player p) {
 		collide=false;
 		imgName = "Tile.png";
@@ -75,12 +70,8 @@ public class Tile {
 		return x;
 	}
 
-<<<<<<< HEAD
+
 	public int getY(){
 		return y;
 	}
-=======
-	
-
->>>>>>> refs/remotes/origin/Conlan
 }

@@ -14,11 +14,18 @@ public class Plate extends Item {
 			f.paint(g);
 		}
 	}
+	public void setBeingHeld(boolean beingHeld) {
+		this.beingHeld=beingHeld;
+		for(Food f:foods) {
+			f.beingHeld=beingHeld;
+		}
+	}
 	public boolean empty() {
 		return(foods.size()==0);
 	}
 	public void add(Food f) {
 		foods.add(0,f);
+		f.setBeingHeld(true);
 	}
 	public Food remove() {
 		return foods.remove(0);

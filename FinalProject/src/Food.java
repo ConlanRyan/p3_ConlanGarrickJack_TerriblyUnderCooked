@@ -24,5 +24,7 @@ public class Food extends Item{
 	public String getImageName() {
 		return imgName;
 	}
-	
+	public void setBeingPlated(boolean plated) {
+		this.plated=plated;
+	}
 }

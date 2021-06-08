@@ -39,7 +39,7 @@ public class Player {
 		y+=yVel;
 		Graphics2D g2 = (Graphics2D) g;
 		
-		g2.drawImage(getImage("player.png"), tx, null);
+		g2.drawImage(getImage("Chef Sprite.png"), tx, null);
 		tx.setToTranslation(x, y);
 		
 	}
@@ -165,6 +165,7 @@ public class Player {
 					}	
 				}
 			}
+			
 			if(priority) {
 				if(itemBeingHeld.beingHeld) {
 					itemBeingHeld.setBeingHeld(false);

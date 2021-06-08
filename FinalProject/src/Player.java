@@ -160,42 +160,17 @@ public class Player {
 					}
 				}
 			}
-			//if we are near an oven, and the food in that oven is cooked
-			//and we are holding a plate, then put the cooked food on our plate
-			for(int i=0;i<room.length;i++) {
-				for(int j=0;j<room[0].length;j++) {
-					if(room[i][j].getRect().intersects(getRect())&&room[i][j].getClass().getName().equals("Stove")) {
-						//if the thing you're holding is a plate that is empty
-						//no putting in an oven
-						if(!(plate&&((Plate)(itemBeingHeld)).empty())) {
-							itemBeingHeld.setBeingHeld(false);
-							
-
-						}
-					}
-					
-				}
-			}
-			
-			
-			
-			
-			
-			
+						
 			//if we are near an oven, and the food in that oven is cooked
 			//and we are holding a plate, then put the cooked food on our plate
 			if(priority) {
 				for(int i=0;i<room.length;i++) {
 					for(int j=0;j<room[0].length;j++) {
 						if(room[i][j].getRect().intersects(getRect())&&room[i][j].getClass().getName().equals("Stove")) {
-							//if the thing you're holding is a plate that is empty
-							//no putting in an oven
+							//dont allow plates that are empty to be in oven
 							if(!(plate&&((Plate)(itemBeingHeld)).empty())) {
-								//itemBeingHeld.setBeingHeld(false);
-								((Stove)(room[i][j])).setCooking(true);
+								itemBeingHeld.setBeingHeld(false);
 								priority=false;
-								
-								
 								
 							}
 						}

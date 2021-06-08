@@ -17,6 +17,8 @@ public class Player {
 	private boolean plate;
 	private Item itemBeingHeld;
 	private boolean priority;
+	private String imgName;
+
 	public Player(int x, int y) {
 		this.x=x;
 		this.y=y;
@@ -28,6 +30,7 @@ public class Player {
 		direction = 0;
 		plate = false;
 		itemBeingHeld = new Item(0, 0, null);
+		imgName = "Chef Sprite Up.png";
 	}
 	
 	private AffineTransform tx = AffineTransform.getTranslateInstance(x, y);
@@ -38,9 +41,23 @@ public class Player {
 		x+=xVel;
 		y+=yVel;
 		Graphics2D g2 = (Graphics2D) g;
-		
-		g2.drawImage(getImage("Chef Sprite.png"), tx, null);
+		if(direction==0) {
+			imgName="Chef Sprite Up.png";
+		}
+		if(direction==1) {
+			imgName="Chef Right.png";
+		}
+		if(direction==2) {
+			imgName="Chef Down.png";
+		}
+		if(direction==3) {
+			imgName="Chef Left.png";
+		}
+		g2.drawImage(getImage(imgName), tx, null);
+
+
 		tx.setToTranslation(x, y);
+		
 		
 	}
 	public int direction(){
@@ -59,9 +76,11 @@ public class Player {
 	}
 	
 	public void pickUp(ArrayList<Item> items, Tile[][] room) {
+
 		
 		//if we are not holding something already
 		if(!isHolding) {
+			
 			
 			//ingredient grab 
 			for(int i=0;i<room.length;i++) {
@@ -122,6 +141,7 @@ public class Player {
 		
 		//if we are holding something
 		else {
+
 			//if we are holding a plate, and we are touching a food, stack that food
 			//in the plate's arraylist
 			priority=true;
@@ -134,9 +154,23 @@ public class Player {
 					if(!i.beingHeld) {
 						//if we are holding a plate, and it is a food
 						if(itemBeingHeld.getClass().getName().equals("Plate")&&i.getClass().getName().equals("Food")){
-							System.out.println("Everything wowrked");
 							((Plate)(itemBeingHeld)).add((Food)(i));
 							priority=false;
+						}
+					}
+				}
+			}
+			//if we are near an oven, and the food in that oven is cooked
+			//and we are holding a plate, then put the cooked food on our plate
+			for(int i=0;i<room.length;i++) {
+				for(int j=0;j<room[0].length;j++) {
+					if(room[i][j].getRect().intersects(getRect())&&room[i][j].getClass().getName().equals("Stove")) {
+						//if the thing you're holding is a plate that is empty
+						//no putting in an oven
+						if(!(plate&&((Plate)(itemBeingHeld)).empty())) {
+							itemBeingHeld.setBeingHeld(false);
+							
+
 						}
 					}
 					
@@ -157,8 +191,12 @@ public class Player {
 							//if the thing you're holding is a plate that is empty
 							//no putting in an oven
 							if(!(plate&&((Plate)(itemBeingHeld)).empty())) {
-								itemBeingHeld.setBeingHeld(false);
+								//itemBeingHeld.setBeingHeld(false);
+								((Stove)(room[i][j])).setCooking(true);
 								priority=false;
+								
+								
+								
 							}
 						}
 					
@@ -172,7 +210,6 @@ public class Player {
 					isHolding=false;
 				}
 			}
-			
 		}
 	}
 	

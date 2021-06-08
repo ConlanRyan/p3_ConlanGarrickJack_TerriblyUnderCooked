@@ -27,7 +27,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     private boolean title = true;
     private int level = 0;
     private boolean colR,colL,colU,colD;
-    private int seconds;
+    private int seconds,count,num;
   
     
 	public void paint(Graphics g) {
@@ -130,8 +130,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		
 		//format: cookingTimer(g,*x location,*y location,number of timers,number of seconds)
 		
-			//num=1;
-			//cookingTimer(g,room[9][10].getX(),room[9][10].getY(),num,5);
+			num=1;
+			cookingTimer(g,room[9][10].getX(),room[9][10].getY(),num,5);
 			//cookingTimer(g,room[9][8].getX(),room[9][8].getY(),num,10);
 			//cookingTimer(g,room[2][11].getX(),room[2][11].getY());
 			//cookingTimer(g,room[10][9].getX()-50,room[10][9].getY()-50);
@@ -165,6 +165,30 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
 		}
 		
+	}
+	
+	public void cookingTimer(Graphics g,int x,int y, int time, int num) {
+	count+=20;
+	if(seconds<5) {
+	if(count%(1000)==0) {
+		seconds++;
+	}
+		
+		
+	if(seconds%4==0) {
+		
+		g.drawImage(getImage("UpTimer.png"),x,y,50,50,null);
+	}else if(seconds%4==1) {
+		
+		g.drawImage(getImage("RightTimer.png"),x,y,50,50,null);
+	}else if(seconds%4==2) {
+		
+		g.drawImage(getImage("DownTimer.png"),x,y,50,50,null);
+	}else{
+		
+		g.drawImage(getImage("LeftTimer.png"),x,y,50,50,null);
+	}
+	}
 	}
 
 	public void horizLine(int x, int x2, int y, String type) {

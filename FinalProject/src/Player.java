@@ -16,6 +16,8 @@ public class Player {
 	private int direction;
 	private boolean plate;
 	private Item itemBeingHeld;
+	
+	
 	public Player(int x, int y) {
 		this.x=x;
 		this.y=y;
@@ -39,8 +41,9 @@ public class Player {
 		Graphics2D g2 = (Graphics2D) g;
 		
 		g2.drawImage(getImage("player.png"), tx, null);
-		System.out.println(isHolding);
+		//System.out.println(isHolding);
 		tx.setToTranslation(x, y);
+		
 		
 	}
 	public int direction(){
@@ -59,10 +62,11 @@ public class Player {
 	}
 	
 	public void pickUp(ArrayList<Item> items, Tile[][] room) {
-		System.out.println(direction);
+		//System.out.println(direction);
 		
 		//if we are not holding something already
 		if(!isHolding) {
+			
 			
 			//ingredient grab 
 			for(int i=0;i<room.length;i++) {
@@ -123,6 +127,7 @@ public class Player {
 						//no putting in an oven
 						if(!(plate&&((Plate)(itemBeingHeld)).empty())) {
 							itemBeingHeld.setBeingHeld(false);
+							room[i][j].cook(g,10);
 						}
 					}
 				

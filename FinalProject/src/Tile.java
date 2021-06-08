@@ -16,6 +16,14 @@ public class Tile {
 	protected int seconds=0;
 	protected Player p;
 	protected boolean canGrabIngredientFrom;
+	private Game game;
+	private int num=0;
+	
+	
+	public void cook(Graphics g, int time) {
+		num++;
+		game.cookingTimer(g,x,y,num,time);
+	}
 	
 	public Tile(int x, int y, Player p) {
 		collide=false;
@@ -66,7 +74,14 @@ public class Tile {
 		Rectangle temp = new Rectangle(x,y,width,height);
 		return temp;
 	}
+	
+	public int getX() {
+		return x;
+	}
 
+	public int getY() {
+		return y;
+	}
 	
 
 }

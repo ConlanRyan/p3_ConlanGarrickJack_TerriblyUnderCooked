@@ -32,8 +32,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     private Music titleMusic = new Music("mainMusic.wav", true);
     private boolean isWalking = false;
     private Music walking = new Music("walking.wav", true);
-    private boolean level1 = false;
-   // private Music levelOne = new Music("level1.wav",false);
  
     
     
@@ -41,7 +39,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		level=1;
 		super.paintComponent(g); // do not remove
 		for(int i =0;i<items.size();i++) {
-			System.out.println(": "+items.get(i).beingHeld);
+			//System.out.println(": "+items.get(i).beingHeld);
 		}
 		if (title) {
 			//test
@@ -245,24 +243,20 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		frame.setVisible(true);
 		
 		//music stuff
-		/*
+		
 		if (title) {
 			titleMusic.play();
-		}else if (!title){
-			titleMusic.stop();
-			titleMusic.stop();
 		}
-		*/
-		walking.play();
-		/*
 		if (!isWalking) {
-			walking.play();
-			System.out.println("is playing walking");
-		}else if (isWalking) {
 			walking.stop();
 			walking.stop();
+			System.out.println("is stopping walking");
 		}
-		*/
+		
+		//walking.play();
+		
+		
+		
 		
 		
 	} // end of MainFrame
@@ -271,19 +265,20 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println();
-		System.out.println(e.getKeyCode());
+		//System.out.println();
+		//System.out.println(e.getKeyCode());
 		//w
 		
 		//if statement to check if collision
 		if (e.getKeyCode()==87) {
+			
 			if(!colU) {
 				p.up();
-				isWalking=true;
 			}
-			
-			
-			
+			isWalking=true;
+			walking.play();
+
+
 		}
 		
 		
@@ -292,8 +287,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		if (e.getKeyCode()==65) {
 			if(!colL) {
 				p.left();
-				isWalking=true;
 			}
+			
+			
+
 		}
 		
 		
@@ -301,7 +298,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		if (e.getKeyCode()==83) {
 			if(!colD) {
 				p.down();
-				isWalking=true;
 			}
 		}
 		
@@ -309,7 +305,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		if (e.getKeyCode()==68) {
 			if(!colR) {
 				p.right();
-				isWalking=true;
 			}
 		}
 		
@@ -326,9 +321,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		//t
 		if(e.getKeyCode()==84) {
 			
-			
-			//titleMusic.stop();
-			//titleMusic.stop();
+			title=false;
+			titleMusic.stop();
+			titleMusic.stop();
 		}
 	}
 
@@ -338,14 +333,13 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
+		//w and s
 		if(e.getKeyCode()==87||e.getKeyCode()==83) {
 			p.stopY();
-			isWalking=false;
-			
 		}
+		//a and d
 		if(e.getKeyCode()==65||e.getKeyCode()==68) {
 			p.stopX();
-			isWalking=false;
 		}
 		
 		
@@ -362,6 +356,13 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		if(e.getKeyCode()==84) {
 			title=false;
 		}
+		//w
+		if (e.getKeyCode()==87) {
+			isWalking=true;
+			
+		}
+		
+		
 		
 	}
 

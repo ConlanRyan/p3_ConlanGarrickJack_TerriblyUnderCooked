@@ -84,7 +84,9 @@ public class Player {
 			//ingredient grab 
 			for(int i=0;i<room.length;i++) {
 				for(int j=0;j<room[0].length;j++) {
-					if(room[i][j].getClass().getName().equals("IngredientStation")&&room[i][j].getRect().intersects(getRect())) {
+					if(room[i][j].getClass().getName().equals("IngredientStation")
+						&& room[i][j].getRect().intersects(getRect())) {
+						
 						//add that item immedietly to the arraylist, so it will paint itself
 						items.add(0,((IngredientStation)(room[i][j])).grabFromBox());
 						//immedietly tell that we are picking it up
@@ -101,37 +103,27 @@ public class Player {
 				//if we are intersecting with an item
 				if(i.getRect().intersects(getRect())) {
 					//if it is a plated food, don't worry about it
-					if(i.getClass().getName().equals("Food")&&((Food)(i)).plated) {
-						
-					}
+					if(i.getClass().getName().equals("Food")&&((Food)(i)).plated) {}
 					else {
 						itemBeingHeld=i;
 						if(direction==0&&(i.getY()<y)){
 							isHolding = true;
-							i.setBeingHeld(true);
-						}
+							i.setBeingHeld(true);	}
 						//looking right?
 						else if(direction==1&&(i.getX()>x)){
 							isHolding = true;
-							i.setBeingHeld(true);
-						}
+							i.setBeingHeld(true);}
 						//looking down?
 						else if(direction==2&&(i.getY()>y)){
 							isHolding = true;
-							i.setBeingHeld(true);
-						}		
+							i.setBeingHeld(true);}		
 						//looking left?
 						else if(direction==3&&(i.getX()<x)){
 							isHolding = true;
-							i.setBeingHeld(true);
-						}
+							i.setBeingHeld(true);}
 						if(i.getClass().getName().equals("Plate")) {
-							plate = true;
-							
-						}
-						else {
-							plate=false;
-						}
+							plate = true;}
+						else {plate=false;}
 					}
 					
 				}
@@ -146,15 +138,17 @@ public class Player {
 			//if we are holding a plate, and we are touching a food, stack that food
 			//in the plate's arraylist
 			priority=true;
+			//find the item we are touching
 			for(Item i:items) {
 				if(itemBeingHeld.getRect().intersects(i.getRect())) {
-					
-					
-					//if the item we are interacting with is one we are
-					//already holding, don't care
+					//if the item we are touching is one that we are
+					//already holding, then we don't bother it
 					if(!i.beingHeld) {
-						//if we are holding a plate, and it is a food
-						if(itemBeingHeld.getClass().getName().equals("Plate")&&i.getClass().getName().equals("Food")){
+						//if we are holding a plate, and the one we are
+						//touching is a food then put that food on the plate!
+						if(itemBeingHeld.getClass().getName().equals("Plate")
+							&&i.getClass().getName().equals("Food")){
+							
 							((Plate)(itemBeingHeld)).add((Food)(i));
 							priority=false;
 						}

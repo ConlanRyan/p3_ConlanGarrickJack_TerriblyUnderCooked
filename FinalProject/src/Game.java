@@ -24,15 +24,19 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	private Player p = new Player(200,300);
     private Tile[][] room = new Tile[12][16];
     private ArrayList<Item> items = new ArrayList<Item>();
-    private boolean title = true;
     private int level = 0;
     private boolean colR,colL,colU,colD;
     private int count=0, seconds=0, num=0;
+    private int titlecount=0;
+    private boolean title = true;
     private Music titleMusic = new Music("mainMusic.wav", true);
     private boolean isWalking = false;
     private Music walking = new Music("walking.wav", true);
-    private Music levelOne = new Music("level1.wav",false);
+    private boolean level1 = false;
+   // private Music levelOne = new Music("level1.wav",false);
  
+    
+    
 	public void paint(Graphics g) {
 		level=1;
 		super.paintComponent(g); // do not remove
@@ -239,20 +243,27 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		t.start();
 		frame.getContentPane().setBackground(Color.black);
 		frame.setVisible(true);
+		
+		//music stuff
+		/*
 		if (title) {
 			titleMusic.play();
-		}else {
+		}else if (!title){
 			titleMusic.stop();
 			titleMusic.stop();
 		}
-		if (isWalking) {
+		*/
+		walking.play();
+		/*
+		if (!isWalking) {
 			walking.play();
 			System.out.println("is playing walking");
-		}else {
-			walking.stop();
+		}else if (isWalking) {
 			walking.stop();
 			walking.stop();
 		}
+		*/
+		
 		
 	} // end of MainFrame
 
@@ -314,7 +325,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		}
 		//t
 		if(e.getKeyCode()==84) {
-			title=false;
+			
+			
+			//titleMusic.stop();
+			//titleMusic.stop();
 		}
 	}
 
@@ -343,11 +357,12 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
+	
 		//t
 		if(e.getKeyCode()==84) {
-			titleMusic.stop();
-			titleMusic.stop();
+			title=false;
 		}
+		
 	}
 
 

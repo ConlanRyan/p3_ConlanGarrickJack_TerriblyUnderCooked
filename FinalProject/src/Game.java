@@ -175,27 +175,27 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	}
 	
 	public void cookingTimer(Graphics g,int x,int y, int time, int num) {
-	count+=20;
-	if(seconds<5) {
-	if(count%(1000)==0) {
-		seconds++;
-	}
+		count+=20;
+		if(seconds<5) {
+			if(count%(1000)==0) {
+				seconds++;
+			}
 		
 		
-	if(seconds%4==0) {
-		
-		g.drawImage(getImage("UpTimer.png"),x,y,50,50,null);
-	}else if(seconds%4==1) {
-		
-		g.drawImage(getImage("RightTimer.png"),x,y,50,50,null);
-	}else if(seconds%4==2) {
-		
-		g.drawImage(getImage("DownTimer.png"),x,y,50,50,null);
-	}else{
-		
-		g.drawImage(getImage("LeftTimer.png"),x,y,50,50,null);
-	}
-	}
+			if(seconds%4==0) {
+			
+				g.drawImage(getImage("UpTimer.png"),x,y,50,50,null);
+			}else if(seconds%4==1) {
+				
+				g.drawImage(getImage("RightTimer.png"),x,y,50,50,null);
+			}else if(seconds%4==2) {
+				
+				g.drawImage(getImage("DownTimer.png"),x,y,50,50,null);
+			}else{
+				
+				g.drawImage(getImage("LeftTimer.png"),x,y,50,50,null);
+			}	
+		}
 	}
 
 	public void horizLine(int x, int x2, int y, String type) {

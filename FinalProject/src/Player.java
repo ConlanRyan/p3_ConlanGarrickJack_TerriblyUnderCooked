@@ -76,11 +76,10 @@ public class Player {
 	}
 	
 	public void pickUp(ArrayList<Item> items, Tile[][] room) {
-
+		
 		
 		//if we are not holding something already
 		if(!isHolding) {
-			
 			
 			//ingredient grab 
 			for(int i=0;i<room.length;i++) {
@@ -92,6 +91,7 @@ public class Player {
 						items.get(0).setBeingHeld(true);
 						//set our personal variable to the picked up item
 						itemBeingHeld=items.get(0);
+						isHolding = true;
 					}
 				}
 			}
@@ -127,6 +127,7 @@ public class Player {
 						}
 						if(i.getClass().getName().equals("Plate")) {
 							plate = true;
+							
 						}
 						else {
 							plate=false;

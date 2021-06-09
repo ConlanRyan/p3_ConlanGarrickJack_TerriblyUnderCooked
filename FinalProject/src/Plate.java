@@ -20,6 +20,12 @@ public class Plate extends Item {
 			f.beingHeld=beingHeld;
 		}
 	}
+	public void delete() {
+		for(Food f:foods) {
+			f.delete();
+		}
+		delivered=true;
+	}
 	public boolean empty() {
 		return(foods.size()==0);
 	}

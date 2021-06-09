@@ -28,12 +28,12 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     private int level = 0;
     private boolean colR,colL,colU,colD;
     private int seconds,count,num;
-  
+    private int score = 0;
     
 	public void paint(Graphics g) {
 		level=1;
 		super.paintComponent(g); // do not remove
-
+		
 		if (title) {
 			//test
 			g.drawImage(getImage("title.png"),0,0,800,600,null);
@@ -48,13 +48,19 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				}
 			}
 			//item paint
-			for(Item i:items) {
-				if(i.getClass().getName().equals("Food")&&((Food)(i)).plated) {
+			for(int i =0;i<items.size();i++) {
+				if(items.get(i).getClass().getName().equals("Food")&&((Food)(items.get(i))).plated) {
 					//if a food is plated it is already going to be painted by
 					//the plate itself
 				}
 				else {
-					i.paint(g);
+					items.get(i).paint(g);
+				}
+				
+				//if the food has been delievered, delete it from our arraylist
+				if(items.get(i).getDevlivered()){
+					items.remove(i);
+					i--;
 				}
 				
 			}
@@ -86,11 +92,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				room[2][12] = new Counter(12,2,p);
 
 				
-				//stoves
-				room[2][9] = new Stove(9,2,p);
-				room[2][11] = new Stove(11,2,p);
-				room[9][8] = new Stove(8,9,p);
-				room[9][10]= new Stove(10,9,p);
+				
 				
 				//sink for washing dishes
 				room[2][4] = new Sink(4,2,p);
@@ -113,7 +115,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				room[2][5] = new PlateSpace(5,2,p);
 
 				room[2][5] = new PlateSpace(5,2,p);
-
+				g.drawString("Score: "+ score,50,50);
 				
 			}
 			else if (level==2) {
@@ -128,20 +130,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			int mouseX = ((int)MouseInfo.getPointerInfo().getLocation().getX())-10;
 		}
 		
-		
-		//testing timer
-	//testing timer
-
-		
-		//for each timer you add you must update the global num variable!!! 
-		
-		//format: cookingTimer(g,*x location,*y location,number of timers,number of seconds)
-		
-			num=1;
-			cookingTimer(g,room[9][10].getX(),room[9][10].getY(),num,5);
-			//cookingTimer(g,room[9][8].getX(),room[9][8].getY(),num,10);
-			//cookingTimer(g,room[2][11].getX(),room[2][11].getY());
-			//cookingTimer(g,room[10][9].getX()-50,room[10][9].getY()-50);
 
 		
 		//Border collision
@@ -174,29 +162,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		
 	}
 	
-	public void cookingTimer(Graphics g,int x,int y, int time, int num) {
-		count+=20;
-		if(seconds<5) {
-			if(count%(1000)==0) {
-				seconds++;
-			}
-		
-		
-			if(seconds%4==0) {
-			
-				g.drawImage(getImage("UpTimer.png"),x,y,50,50,null);
-			}else if(seconds%4==1) {
-				
-				g.drawImage(getImage("RightTimer.png"),x,y,50,50,null);
-			}else if(seconds%4==2) {
-				
-				g.drawImage(getImage("DownTimer.png"),x,y,50,50,null);
-			}else{
-				
-				g.drawImage(getImage("LeftTimer.png"),x,y,50,50,null);
-			}	
-		}
-	}
 
 	public void horizLine(int x, int x2, int y, String type) {
 		for(int i =x;i<x2;i++) {
@@ -261,7 +226,11 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		items.add(new Plate(600,100,p));
 		items.add(new Plate(400,100,p));
 		items.add(new Plate(500,100,p));
-		
+		//stoves
+		room[2][9] = new Stove(9,2,p);
+		room[2][11] = new Stove(11,2,p);
+		room[9][8] = new Stove(8,9,p);
+		room[9][10]= new Stove(10,9,p);
 		t.start();
 		frame.getContentPane().setBackground(Color.black);
 		frame.setVisible(true);

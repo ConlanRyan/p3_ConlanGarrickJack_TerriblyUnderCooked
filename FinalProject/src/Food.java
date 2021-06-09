@@ -19,6 +19,14 @@ public class Food extends Item{
 	
 	public void paint(Graphics g) {
 		super.paint(g);
+		if(cooked) {
+			if(imgName=="Raw Spagetti.png") {
+				imgName="Spagetti.png";
+			}
+			if(imgName=="Whole Tomato.png") {
+				imgName="Sauce.png";
+			}
+		}
 		
 	}
 	public String getImageName() {
@@ -26,5 +34,8 @@ public class Food extends Item{
 	}
 	public void setBeingPlated(boolean plated) {
 		this.plated=plated;
+	}
+	public void setCooked(boolean cooked) {
+		this.cooked=cooked;
 	}
 }

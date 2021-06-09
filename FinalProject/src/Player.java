@@ -16,7 +16,6 @@ public class Player {
 	private int direction;
 	private boolean plate;
 	private Item itemBeingHeld;
-	private boolean priority;
 	private String imgName;
 
 	public Player(int x, int y) {
@@ -80,54 +79,63 @@ public class Player {
 		
 		//if we are not holding something already
 		if(!isHolding) {
-			
+			boolean priority=true;
 			//ingredient grab 
-			for(int i=0;i<room.length;i++) {
-				for(int j=0;j<room[0].length;j++) {
-					if(room[i][j].getClass().getName().equals("IngredientStation")
-						&& room[i][j].getRect().intersects(getRect())) {
+			if(priority) {
+				//for every item in our arraylist
+				for(Item i:items) {
+					//if we are intersecting with an item
+					if(i.getRect().intersects(getRect())) {
+						//if it is a plated food, don't worry about it
+						if(i.getClass().getName().equals("Food")&&((Food)(i)).plated) {}
+						else {
+							itemBeingHeld=i;
+							if(direction==0&&(i.getY()<y)){
+								isHolding = true;
+								i.setBeingHeld(true);	}
+							//looking right?
+							else if(direction==1&&(i.getX()>x)){
+								isHolding = true;
+								i.setBeingHeld(true);}
+							//looking down?
+							else if(direction==2&&(i.getY()>y)){
+								isHolding = true;
+								i.setBeingHeld(true);}		
+							//looking left?
+							else if(direction==3&&(i.getX()<x)){
+								isHolding = true;
+								i.setBeingHeld(true);}
+							if(i.getClass().getName().equals("Plate")) {
+								plate = true;}
+							else {plate=false;}
+							priority=false;
+						}
 						
-						//add that item immedietly to the arraylist, so it will paint itself
-						items.add(0,((IngredientStation)(room[i][j])).grabFromBox());
-						//immedietly tell that we are picking it up
-						items.get(0).setBeingHeld(true);
-						//set our personal variable to the picked up item
-						itemBeingHeld=items.get(0);
-						isHolding = true;
+					}
+				}
+				
+			}
+			if(priority) {
+				for(int i=0;i<room.length;i++) {
+					for(int j=0;j<room[0].length;j++) {
+						if(room[i][j].getClass().getName().equals("IngredientStation")
+							&& room[i][j].getRect().intersects(getRect())) {
+							
+							//add that item immedietly to the arraylist, so it will paint itself
+							items.add(0,((IngredientStation)(room[i][j])).grabFromBox());
+							//immedietly tell that we are picking it up
+							items.get(0).setBeingHeld(true);
+							//set our personal variable to the picked up item
+							itemBeingHeld=items.get(0);
+							isHolding = true;
+							priority=false;
+						}
 					}
 				}
 			}
 			
-			//for every item in our arraylist
-			for(Item i:items) {
-				//if we are intersecting with an item
-				if(i.getRect().intersects(getRect())) {
-					//if it is a plated food, don't worry about it
-					if(i.getClass().getName().equals("Food")&&((Food)(i)).plated) {}
-					else {
-						itemBeingHeld=i;
-						if(direction==0&&(i.getY()<y)){
-							isHolding = true;
-							i.setBeingHeld(true);	}
-						//looking right?
-						else if(direction==1&&(i.getX()>x)){
-							isHolding = true;
-							i.setBeingHeld(true);}
-						//looking down?
-						else if(direction==2&&(i.getY()>y)){
-							isHolding = true;
-							i.setBeingHeld(true);}		
-						//looking left?
-						else if(direction==3&&(i.getX()<x)){
-							isHolding = true;
-							i.setBeingHeld(true);}
-						if(i.getClass().getName().equals("Plate")) {
-							plate = true;}
-						else {plate=false;}
-					}
-					
-				}
-			}
+			
+			
 			
 		
 		}
@@ -137,7 +145,7 @@ public class Player {
 
 			//if we are holding a plate, and we are touching a food, stack that food
 			//in the plate's arraylist
-			priority=true;
+			boolean priority=true;
 			//find the item we are touching
 			for(Item i:items) {
 				if(itemBeingHeld.getRect().intersects(i.getRect())) {
@@ -151,27 +159,46 @@ public class Player {
 							
 							((Plate)(itemBeingHeld)).add((Food)(i));
 							priority=false;
+							isHolding=true;
 						}
 					}
 				}
 			}
 						
-			//if we are near an oven, and the food in that oven is cooked
-			//and we are holding a plate, then put the cooked food on our plate
+		
 			if(priority) {
 				for(int i=0;i<room.length;i++) {
 					for(int j=0;j<room[0].length;j++) {
 						if(room[i][j].getRect().intersects(getRect())&&room[i][j].getClass().getName().equals("Stove")) {
 							//dont allow plates that are empty to be in oven
 							if(!(plate&&((Plate)(itemBeingHeld)).empty())) {
-								itemBeingHeld.setBeingHeld(false);
+								//put just the food in the oven
+								
+								Food f = ((Plate)(itemBeingHeld)).remove();
+								f.setBeingHeld(false);
+								((Stove)(room[i][j])).startCooking(f);
 								priority=false;
+								isHolding=true;
 								
 							}
 						}
 					
 					}	
 				}
+			}
+			//Delivering food out!
+			if(priority) {
+				for(int i=0;i<room.length;i++) {
+					for(int j=0;j<room[0].length;j++) {
+						if(room[i][j].getRect().intersects(getRect())&&room[i][j].getClass().getName().equals("DeliverySpace")) {
+							//drop our item
+							itemBeingHeld.setBeingHeld(false);
+							isHolding=false;
+							itemBeingHeld.delete();
+							
+						}
+					}
+				}	
 			}
 			
 			if(priority) {

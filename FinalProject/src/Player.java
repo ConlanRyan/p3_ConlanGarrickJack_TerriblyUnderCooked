@@ -17,7 +17,7 @@ public class Player {
 	private boolean plate;
 	private Item itemBeingHeld;
 	private String imgName;
-
+	private int score;
 	public Player(int x, int y) {
 		this.x=x;
 		this.y=y;
@@ -29,7 +29,8 @@ public class Player {
 		direction = 0;
 		plate = false;
 		itemBeingHeld = new Item(0, 0, null);
-		imgName = "Chef Sprite Up.png";
+		imgName = "Chef Up.png";
+		score = 0;
 	}
 	
 	private AffineTransform tx = AffineTransform.getTranslateInstance(x, y);
@@ -41,7 +42,7 @@ public class Player {
 		y+=yVel;
 		Graphics2D g2 = (Graphics2D) g;
 		if(direction==0) {
-			imgName="Chef Sprite Up.png";
+			imgName="Chef Up.png";
 		}
 		if(direction==1) {
 			imgName="Chef Right.png";
@@ -171,7 +172,7 @@ public class Player {
 					for(int j=0;j<room[0].length;j++) {
 						if(room[i][j].getRect().intersects(getRect())&&room[i][j].getClass().getName().equals("Stove")) {
 							//dont allow plates that are empty to be in oven
-							if(!(plate&&((Plate)(itemBeingHeld)).empty())) {
+							if(itemBeingHeld.getClass().getName().equals("Plate")&& !(plate&&((Plate)(itemBeingHeld)).empty())) {
 								//put just the food in the oven
 								
 								Food f = ((Plate)(itemBeingHeld)).remove();
@@ -190,10 +191,11 @@ public class Player {
 			if(priority) {
 				for(int i=0;i<room.length;i++) {
 					for(int j=0;j<room[0].length;j++) {
-						if(room[i][j].getRect().intersects(getRect())&&room[i][j].getClass().getName().equals("DeliverySpace")) {
+						if(itemBeingHeld.getClass().getName().equals("Plate")&&room[i][j].getRect().intersects(getRect())&&room[i][j].getClass().getName().equals("DeliverySpace")) {
 							//drop our item
 							itemBeingHeld.setBeingHeld(false);
 							isHolding=false;
+							calculateScore((Plate)(itemBeingHeld));
 							itemBeingHeld.delete();
 							
 						}
@@ -213,6 +215,32 @@ public class Player {
 	public void right() {
 		xVel=speed;
 		direction = 1;
+	}
+	public void calculateScore(Plate p) {
+		ArrayList<Food> foods = p.getFoods();
+		//if all the food is cooked, you get points
+		for(Food f:foods) {
+			String name = f.getImageName();
+			if(f.cooked) {
+				score++;
+			}
+			if(name.equals("Spagetti.png")){
+				score++;
+			}
+			if(name.equals("Raw Spagetti.png")) {
+				score++;
+			}
+			if(name.equals("Sauce.png")){
+				score++;
+			}
+			if(name.equals("Tomato.png")) {
+				score++;
+			}
+		}
+		
+	}
+	public int getScore() {
+		return score;
 	}
 	public void left() {
 		xVel=-speed;

@@ -29,6 +29,9 @@ public class Plate extends Item {
 	public boolean empty() {
 		return(foods.size()==0);
 	}
+	public ArrayList<Food> getFoods() {
+		return foods;
+	}
 	public void add(Food f) {
 		foods.add(f);
 		f.setBeingHeld(true);

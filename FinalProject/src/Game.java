@@ -70,7 +70,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			if(level==0) {
 				
 			}
-			//breakfast
+			//spagetti
 			else if (level==1) {
 				//counters
 				horizLine(2,4,2,"counter");
@@ -91,9 +91,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				room[2][10] = new Counter(10,2,p);
 				room[2][12] = new Counter(12,2,p);
 
-				
-				
-				
 				//sink for washing dishes
 				room[2][4] = new Sink(4,2,p);
 	
@@ -115,7 +112,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				room[2][5] = new PlateSpace(5,2,p);
 
 				room[2][5] = new PlateSpace(5,2,p);
-				g.drawString("Score: "+ score,50,50);
+				g.drawString("Score: "+ p.getScore(),50,50);
 				
 			}
 			else if (level==2) {
@@ -202,6 +199,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			g.drawLine(0, i, 800, i);
 		}
 	}
+	
 	// do not touch
 	public Game() {
 

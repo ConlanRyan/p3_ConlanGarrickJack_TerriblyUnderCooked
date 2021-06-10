@@ -24,22 +24,26 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	private Player p = new Player(200,300);
     private Tile[][] room = new Tile[12][16];
     private ArrayList<Item> items = new ArrayList<Item>();
-    private boolean title = true;
     private int level = 0;
     private boolean colR,colL,colU,colD;
-    private int seconds,count,num;
-    private int score = 0;
+
+    private int count=0, seconds=0, num=0;
+    private int titlecount=0;
+    private boolean title = true;
+    private Music titleMusic = new Music("mainMusic.wav", true);
+    private boolean isWalking = false;
+    private Music walking = new Music("walking.wav", true);
     
 	public void paint(Graphics g) {
 		level=1;
 		super.paintComponent(g); // do not remove
-		
+
 		if (title) {
 			//test
 			g.drawImage(getImage("title.png"),0,0,800,600,null);
-			g.setFont(new Font("courier",30,30));
-			g.setColor(new Color(255,255,255));
-		}
+		
+			
+		} 
 		else {
 			//room paint
 			for(int i=0;i<room.length;i++) {
@@ -90,7 +94,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				room[2][8] = new Counter(8,2,p);
 				room[2][10] = new Counter(10,2,p);
 				room[2][12] = new Counter(12,2,p);
-
 				//sink for washing dishes
 				room[2][4] = new Sink(4,2,p);
 	
@@ -110,25 +113,20 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				//plate spaces
 				room[6][13] = new PlateSpace(13,6,p);
 				room[2][5] = new PlateSpace(5,2,p);
+				
 
-				room[2][5] = new PlateSpace(5,2,p);
 				g.drawString("Score: "+ p.getScore(),50,50);
 				
 			}
 			else if (level==2) {
 				
-				
 			}
-			
 			
 			//grid(g);
 			p.paint(g);
 			int mouseY = ((int)MouseInfo.getPointerInfo().getLocation().getY())-35;
 			int mouseX = ((int)MouseInfo.getPointerInfo().getLocation().getX())-10;
-		}
-		
-
-		
+		}	
 		//Border collision
 		if(p.getX()+p.getWidth()>640) {
 			p.stopX();
@@ -202,16 +200,15 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	
 	// do not touch
 	public Game() {
-
 		JFrame frame = new JFrame("Terribly Under Cooked");
 		frame.setSize(815, 637);
-
 		frame.setResizable(false);
 		frame.setResizable(true);
 		frame.setVisible(true);
 		frame.add(this);
 		frame.addKeyListener(this);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		Timer t = new Timer(16, this);
 		
 		//LEVEL CREATION
@@ -221,17 +218,38 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				
 			}
 		}
+		
 		items.add(new Plate(600,100,p));
 		items.add(new Plate(400,100,p));
 		items.add(new Plate(500,100,p));
+
 		//stoves
 		room[2][9] = new Stove(9,2,p);
 		room[2][11] = new Stove(11,2,p);
 		room[9][8] = new Stove(8,9,p);
 		room[9][10]= new Stove(10,9,p);
+
 		t.start();
 		frame.getContentPane().setBackground(Color.black);
 		frame.setVisible(true);
+		
+		//music stuff
+		
+		if (title) {
+			titleMusic.play();
+		}
+		if (!isWalking) {
+			walking.stop();
+			walking.stop();
+			System.out.println("is stopping walking");
+		}
+		
+		//walking.play();
+		
+		
+		
+		
+		
 	} // end of MainFrame
 
 
@@ -241,12 +259,15 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		//w
 		//if statement to check if collision
 		if (e.getKeyCode()==87) {
+			
 			if(!colU) {
 				p.up();
+				isWalking=true;
+				walking.play();
 			}
 			
-			
-			
+
+
 		}
 		
 		
@@ -255,7 +276,12 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		if (e.getKeyCode()==65) {
 			if(!colL) {
 				p.left();
+				isWalking=true;
+				walking.play();
 			}
+			
+			
+
 		}
 		
 		
@@ -263,6 +289,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		if (e.getKeyCode()==83) {
 			if(!colD) {
 				p.down();
+				isWalking=true;
+				walking.play();
 			}
 		}
 		
@@ -270,6 +298,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		if (e.getKeyCode()==68) {
 			if(!colR) {
 				p.right();
+				isWalking=true;
+				walking.play();
 			}
 		}
 		
@@ -283,8 +313,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			p.pickUp(items,room);
 			
 		}
-		
+		//t
 		if(e.getKeyCode()==84) {
+			
 			title=false;
 		}
 	}
@@ -295,13 +326,15 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
+		//w and s
 		if(e.getKeyCode()==87||e.getKeyCode()==83) {
 			p.stopY();
-			
 		}
+		//a and d
 		if(e.getKeyCode()==65||e.getKeyCode()==68) {
 			p.stopX();
 		}
+		
 		
 	}
 
@@ -311,6 +344,18 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
+	
+		//t
+		if(e.getKeyCode()==84) {
+			title=false;
+		}
+		//w
+		if (e.getKeyCode()==87) {
+			isWalking=true;
+			
+		}
+		
+		
 		
 	}
 

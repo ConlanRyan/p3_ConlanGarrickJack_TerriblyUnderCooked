@@ -1,3 +1,4 @@
+
 import java.awt.Graphics;
 
 public class Food extends Item{
@@ -39,3 +40,4 @@ public class Food extends Item{
 		this.cooked=cooked;
 	}
 }
+

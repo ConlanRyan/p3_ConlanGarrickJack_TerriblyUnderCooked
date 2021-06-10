@@ -114,7 +114,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				room[6][13] = new PlateSpace(13,6,p);
 				room[2][5] = new PlateSpace(5,2,p);
 				
-
+				System.out.println(isWalking);
 				g.drawString("Score: "+ p.getScore(),50,50);
 				
 			}

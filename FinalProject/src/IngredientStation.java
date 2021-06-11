@@ -12,7 +12,6 @@ public class IngredientStation extends Tile{
 		collide = true;
 		this.imgName = imgName;
 		this.f=f;
-		canGrabIngredientFrom=true;
 		
 	}
 	protected AffineTransform tx = AffineTransform.getTranslateInstance(x, y);
@@ -30,7 +29,6 @@ public class IngredientStation extends Tile{
 		
 	}
 	public Food grabFromBox() {
-		System.out.println(f.getImageName());
 		return f;
 		
 	}

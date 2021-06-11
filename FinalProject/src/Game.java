@@ -31,13 +31,11 @@ public class Game extends JPanel implements ActionListener, KeyListener {
     private boolean title = true;
     private Music titleMusic = new Music("mainMusic.wav", true);
     private boolean isWalking = false;
-    private Music walking = new Music("walking.wav", true);
- 
-    
-    
+    private Music walking = new Music("walking.wav", true); 
 	public void paint(Graphics g) {
 		level=1;
 		super.paintComponent(g); // do not remove
+
 		for(int i =0;i<items.size();i++) {
 			//System.out.println(": "+items.get(i).beingHeld);
 		}
@@ -47,7 +45,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			g.setFont(new Font("courier",30,30));
 			g.setColor(new Color(255,255,255));
 			g.drawString("Press T to begin",33,400);
-			
 		} 
 		else {
 			//room paint
@@ -57,8 +54,21 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				}
 			}
 			//item paint
-			for(Item i:items) {
-				i.paint(g);
+			for(int i =0;i<items.size();i++) {
+				if(items.get(i).getClass().getName().equals("Food")&&((Food)(items.get(i))).plated) {
+					//if a food is plated it is already going to be painted by
+					//the plate itself
+				}
+				else {
+					items.get(i).paint(g);
+				}
+				//if the food was delivered then delete it
+				if(items.get(i).getDevlivered()) {
+					items.remove(i);
+					System.out.println("Removed");
+					i--;
+				}
+				
 			}
 			
 			
@@ -66,7 +76,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			if(level==0) {
 				
 			}
-			//breakfast
+			//spagetti
 			else if (level==1) {
 				//counters
 				horizLine(2,4,2,"counter");
@@ -103,7 +113,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				room[9][6] = new CuttingBoard(6,9,p);
 				
 				//ingredients
-				room[3][2] = new IngredientStation(2,3,new Food(0,0,"Spagetti Box.png",p),p,"Spagetti Box.png");
+				room[3][2] = new IngredientStation(2,3,new Food(0,0,"Raw Spagetti.png",p),p,"Spagetti Box.png");
 				room[5][2] = new IngredientStation(2,5,new Food(0,0,"Whole Tomato.png",p),p,"Tomatoes in Crate.png");
 				
 				//delivery space
@@ -114,8 +124,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				room[6][13] = new PlateSpace(13,6,p);
 				room[2][5] = new PlateSpace(5,2,p);
 
-				room[2][5] = new PlateSpace(5,2,p);
-
+				
+				g.drawString("Score: "+ p.getScore(),50,50);
 				
 			}
 			else if (level==2) {
@@ -143,8 +153,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			//cookingTimer(g,room[9][8].getX(),room[9][8].getY(),num,10);
 			//cookingTimer(g,room[2][11].getX(),room[2][11].getY());
 			//cookingTimer(g,room[10][9].getX()-50,room[10][9].getY()-50);
-
-		
 		//Border collision
 		if(p.getX()+p.getWidth()>640) {
 			p.stopX();
@@ -174,6 +182,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		}
 		
 	}
+	
 
 	public void horizLine(int x, int x2, int y, String type) {
 		for(int i =x;i<x2;i++) {
@@ -214,6 +223,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			g.drawLine(0, i, 800, i);
 		}
 	}
+	
 	// do not touch
 	public Game() {
 		JFrame frame = new JFrame("Terribly Under Cooked");
@@ -238,18 +248,28 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		items.add(new Plate(600,100,p));
 		items.add(new Plate(400,100,p));
 		items.add(new Plate(500,100,p));
+
+		//stoves
+		room[2][9] = new Stove(9,2,p);
+		room[2][11] = new Stove(11,2,p);
+		room[9][8] = new Stove(8,9,p);
+		room[9][10]= new Stove(10,9,p);
+
+
 		t.start();
 		frame.getContentPane().setBackground(Color.black);
 		frame.setVisible(true);
 		
 		//music stuff
 		
-		if (!title) {
-			titleMusic.play();
-		}
+
+
 		if (!isWalking) {
 			walking.play();
 			System.out.println("is playing walking");
+		}
+		if (title) {
+			titleMusic.play();
 		}
 		
 		//walking.play();
@@ -263,20 +283,20 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
 
 	@Override
+
 	public void keyPressed(KeyEvent e) {
-		//System.out.println();
-		//System.out.println(e.getKeyCode());
+
 		//w
-		
 		//if statement to check if collision
 		if (e.getKeyCode()==87) {
 			
 			if(!colU) {
 				p.up();
+				
 			}
+
 			isWalking=true;
 			walking.stop();
-
 
 		}
 		
@@ -286,6 +306,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		if (e.getKeyCode()==65) {
 			if(!colL) {
 				p.left();
+				
 			}
 			
 			
@@ -297,6 +318,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		if (e.getKeyCode()==83) {
 			if(!colD) {
 				p.down();
+				
 			}
 		}
 		
@@ -304,6 +326,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		if (e.getKeyCode()==68) {
 			if(!colR) {
 				p.right();
+				
 			}
 		}
 		
@@ -360,9 +383,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			isWalking=true;
 			
 		}
-		
-		
-		
+	
 	}
 
 
@@ -381,32 +402,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
 		
 	
-	public void cookingTimer(Graphics g,int x , int y, int num, int time) {
-		count+=20/num;
-		if(seconds<time) {
-		if(count%(1000)==0) {
-			seconds++;
-			System.out.println(seconds);
-		}
-			
-			
-		if(seconds%4==0) {
-			
-			g.drawImage(getImage("UpTimer.png"),x,y,50,50,null);
-		}else if(seconds%4==1) {
-			
-			g.drawImage(getImage("RightTimer.png"),x,y,50,50,null);
-		}else if(seconds%4==2) {
-			
-			g.drawImage(getImage("DownTimer.png"),x,y,50,50,null);
-		}else{
-			
-			g.drawImage(getImage("LeftTimer.png"),x,y,50,50,null);
-		}
-		}
-		
-		
-	}
+	
 	
 	
 	

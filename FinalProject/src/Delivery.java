@@ -1,4 +1,5 @@
-import java.awt.Graphics;
+
+import java.awt.Graphics; 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.concurrent.TimeUnit;
@@ -9,4 +10,6 @@ public class Delivery extends Tile{
 		imgName = "deliveryStation.png";
 		collide = true;
 	}	
+
 }
+

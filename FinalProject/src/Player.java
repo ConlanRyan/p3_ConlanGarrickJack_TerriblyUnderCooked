@@ -196,7 +196,7 @@ public class Player {
 							itemBeingHeld.setBeingHeld(false);
 							isHolding=false;
 							calculateScore((Plate)(itemBeingHeld));
-							itemBeingHeld.delete();
+							((Plate)(itemBeingHeld)).reset();
 							
 						}
 					}

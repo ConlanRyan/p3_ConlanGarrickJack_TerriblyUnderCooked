@@ -64,8 +64,8 @@ public class Item {
 	public int getX() {
 		return x;
 	}
-	public void delete() {
-		delivered=true;
+	public void setDelivered(boolean del) {
+		delivered=del;
 	}
 	public boolean getDevlivered() {
 		return delivered;

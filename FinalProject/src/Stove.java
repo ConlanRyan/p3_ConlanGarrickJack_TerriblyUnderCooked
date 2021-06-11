@@ -42,6 +42,9 @@ public class Stove extends Tile {
 			}
 			else {
 				f.setCooked(true);
+				seconds=0;
+				count=0;
+				cooking=false;
 			}
 		}
 		
@@ -54,7 +57,6 @@ public class Stove extends Tile {
 	}
 	
 	public void startCooking(Food f) {
-		System.out.println("Started cooking");
 		cooking=true;
 		count=0;
 		this.f = f;

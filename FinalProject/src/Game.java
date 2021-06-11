@@ -60,10 +60,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				else {
 					items.get(i).paint(g);
 				}
-				
-				//if the food has been delievered, delete it from our arraylist
-				if(items.get(i).getDevlivered()){
+				//if the food was delivered then delete it
+				if(items.get(i).getDevlivered()) {
 					items.remove(i);
+					System.out.println("Removed");
 					i--;
 				}
 				
@@ -114,7 +114,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				room[6][13] = new PlateSpace(13,6,p);
 				room[2][5] = new PlateSpace(5,2,p);
 				
-				System.out.println(isWalking);
 				g.drawString("Score: "+ p.getScore(),50,50);
 				
 			}
@@ -238,11 +237,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		if (title) {
 			titleMusic.play();
 		}
-		if (!isWalking) {
-			walking.stop();
-			walking.stop();
-			System.out.println("is stopping walking");
-		}
 		
 		//walking.play();
 		
@@ -262,8 +256,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			
 			if(!colU) {
 				p.up();
-				isWalking=true;
-				walking.play();
+				
 			}
 			
 
@@ -276,8 +269,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		if (e.getKeyCode()==65) {
 			if(!colL) {
 				p.left();
-				isWalking=true;
-				walking.play();
+				
 			}
 			
 			
@@ -289,8 +281,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		if (e.getKeyCode()==83) {
 			if(!colD) {
 				p.down();
-				isWalking=true;
-				walking.play();
+				
 			}
 		}
 		
@@ -298,8 +289,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		if (e.getKeyCode()==68) {
 			if(!colR) {
 				p.right();
-				isWalking=true;
-				walking.play();
+				
 			}
 		}
 		
@@ -350,10 +340,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			title=false;
 		}
 		//w
-		if (e.getKeyCode()==87) {
-			isWalking=true;
-			
-		}
+		
 		
 		
 		

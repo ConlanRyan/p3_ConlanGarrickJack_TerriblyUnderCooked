@@ -14,7 +14,10 @@ public class Player {
 	private boolean collide=false;
 	private boolean isHolding;
 	private int direction;
+	private boolean plate;
 	private Item itemBeingHeld;
+	private String imgName;
+	private int score;
 	public Player(int x, int y) {
 		this.x=x;
 		this.y=y;
@@ -24,6 +27,10 @@ public class Player {
 		height = 50;
 		isHolding = false;
 		direction = 0;
+		plate = false;
+		itemBeingHeld = new Item(0, 0, null);
+		imgName = "Chef Up.png";
+		score = 0;
 	}
 	
 	private AffineTransform tx = AffineTransform.getTranslateInstance(x, y);
@@ -34,10 +41,23 @@ public class Player {
 		x+=xVel;
 		y+=yVel;
 		Graphics2D g2 = (Graphics2D) g;
-		
-		g2.drawImage(getImage("player.png"), tx, null);
-		System.out.println(isHolding);
+		if(direction==0) {
+			imgName="Chef Up.png";
+		}
+		if(direction==1) {
+			imgName="Chef Right.png";
+		}
+		if(direction==2) {
+			imgName="Chef Down.png";
+		}
+		if(direction==3) {
+			imgName="Chef Left.png";
+		}
+		g2.drawImage(getImage(imgName), tx, null);
+
+
 		tx.setToTranslation(x, y);
+		
 		
 	}
 	public int direction(){
@@ -55,55 +75,139 @@ public class Player {
 		return tempImage;
 	}
 	
-	public void pickUp(ArrayList<Item> items) {
-		//looking up and something above?
-		System.out.println("Method activated");
-		System.out.println(direction);
+	public void pickUp(ArrayList<Item> items, Tile[][] room) {
+		
 		
 		//if we are not holding something already
 		if(!isHolding) {
-			//for every item in our arraylist
-			for(Item i:items) {
-				//if we are intersecting with an item
-				if(i.getRect().intersects(getRect())) {
-					if(direction==0&&(i.getY()<y)){
-						isHolding = true;
-						i.setBeingHeld(true);
-						System.out.println("Picked up");
+			boolean priority=true;
+			//ingredient grab 
+			if(priority) {
+				//for every item in our arraylist
+				for(Item i:items) {
+					//if we are intersecting with an item
+					if(i.getRect().intersects(getRect())) {
+						//if it is a plated food, don't worry about it
+						if(i.getClass().getName().equals("Food")&&((Food)(i)).plated) {}
+						else {
+							itemBeingHeld=i;
+							if(direction==0&&(i.getY()<y)){
+								isHolding = true;
+								i.setBeingHeld(true);	}
+							//looking right?
+							else if(direction==1&&(i.getX()>x)){
+								isHolding = true;
+								i.setBeingHeld(true);}
+							//looking down?
+							else if(direction==2&&(i.getY()>y)){
+								isHolding = true;
+								i.setBeingHeld(true);}		
+							//looking left?
+							else if(direction==3&&(i.getX()<x)){
+								isHolding = true;
+								i.setBeingHeld(true);}
+							if(i.getClass().getName().equals("Plate")) {
+								plate = true;}
+							else {plate=false;}
+							priority=false;
+						}
+						
 					}
-					//looking right?
-					else if(direction==1&&(i.getX()>x)){
-						isHolding = true;
-						i.setBeingHeld(true);
-						System.out.println("Picked right");
-					}
-					//looking down?
-					else if(direction==2&&(i.getY()>y)){
-						isHolding = true;
-						i.setBeingHeld(true);
-						System.out.println("Picked down");
-					}		
-					//looking left?
-					else if(direction==3&&(i.getX()<x)){
-						isHolding = true;
-						i.setBeingHeld(true);
-						System.out.println("Picked left");
-					}
+				}
 				
+			}
+			if(priority) {
+				for(int i=0;i<room.length;i++) {
+					for(int j=0;j<room[0].length;j++) {
+						if(room[i][j].getClass().getName().equals("IngredientStation")
+							&& room[i][j].getRect().intersects(getRect())) {
+							
+							//add that item immedietly to the arraylist, so it will paint itself
+							items.add(0,((IngredientStation)(room[i][j])).grabFromBox());
+							//immedietly tell that we are picking it up
+							items.get(0).setBeingHeld(true);
+							//set our personal variable to the picked up item
+							itemBeingHeld=items.get(0);
+							isHolding = true;
+							priority=false;
+						}
+					}
 				}
 			}
+			
+			
+			
+			
 		
 		}
+		
+		//if we are holding something
 		else {
-			//if we are holding something
-			isHolding = false;
+
+			//if we are holding a plate, and we are touching a food, stack that food
+			//in the plate's arraylist
+			boolean priority=true;
+			//find the item we are touching
 			for(Item i:items) {
-				//find the one we are holding
-				if(i.beingHeld) {
-					//set it down
-					i.setBeingHeld(false);
+				if(itemBeingHeld.getRect().intersects(i.getRect())) {
+					//if the item we are touching is one that we are
+					//already holding, then we don't bother it
+					if(!i.beingHeld) {
+						//if we are holding a plate, and the one we are
+						//touching is a food then put that food on the plate!
+						if(itemBeingHeld.getClass().getName().equals("Plate")
+							&&i.getClass().getName().equals("Food")){
+							
+							((Plate)(itemBeingHeld)).add((Food)(i));
+							priority=false;
+							isHolding=true;
+						}
+					}
 				}
-				
+			}
+						
+		
+			if(priority) {
+				for(int i=0;i<room.length;i++) {
+					for(int j=0;j<room[0].length;j++) {
+						if(room[i][j].getRect().intersects(getRect())&&room[i][j].getClass().getName().equals("Stove")) {
+							//dont allow plates that are empty to be in oven
+							if(itemBeingHeld.getClass().getName().equals("Plate")&& !(plate&&((Plate)(itemBeingHeld)).empty())) {
+								//put just the food in the oven
+								
+								Food f = ((Plate)(itemBeingHeld)).remove();
+								f.setBeingHeld(false);
+								((Stove)(room[i][j])).startCooking(f);
+								priority=false;
+								isHolding=true;
+								
+							}
+						}
+					
+					}	
+				}
+			}
+			//Delivering food out!
+			if(priority) {
+				for(int i=0;i<room.length;i++) {
+					for(int j=0;j<room[0].length;j++) {
+						if(itemBeingHeld.getClass().getName().equals("Plate")&&room[i][j].getRect().intersects(getRect())&&room[i][j].getClass().getName().equals("DeliverySpace")) {
+							//drop our item
+							itemBeingHeld.setBeingHeld(false);
+							isHolding=false;
+							calculateScore((Plate)(itemBeingHeld));
+							((Plate)(itemBeingHeld)).reset();
+							
+						}
+					}
+				}	
+			}
+			
+			if(priority) {
+				if(itemBeingHeld.beingHeld) {
+					itemBeingHeld.setBeingHeld(false);
+					isHolding=false;
+				}
 			}
 		}
 	}
@@ -111,6 +215,32 @@ public class Player {
 	public void right() {
 		xVel=speed;
 		direction = 1;
+	}
+	public void calculateScore(Plate p) {
+		ArrayList<Food> foods = p.getFoods();
+		//if all the food is cooked, you get points
+		for(Food f:foods) {
+			String name = f.getImageName();
+			if(f.cooked) {
+				score++;
+			}
+			if(name.equals("Spagetti.png")){
+				score++;
+			}
+			if(name.equals("Raw Spagetti.png")) {
+				score++;
+			}
+			if(name.equals("Sauce.png")){
+				score++;
+			}
+			if(name.equals("Tomato.png")) {
+				score++;
+			}
+		}
+		
+	}
+	public int getScore() {
+		return score;
 	}
 	public void left() {
 		xVel=-speed;

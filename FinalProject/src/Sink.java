@@ -5,3 +5,4 @@ public class Sink extends Tile{
 		collide = true;
 	}
 }
+

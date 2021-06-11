@@ -15,6 +15,10 @@ public class Tile {
 	protected String imgName;
 	protected int seconds=0;
 	protected Player p;
+	protected boolean canGrabIngredientFrom;
+	private Game game;
+	private int num=0;
+	
 	public Tile(int x, int y, Player p) {
 		collide=false;
 		imgName = "Tile.png";
@@ -23,6 +27,7 @@ public class Tile {
 		width = 50;
 		height = 50;
 		this.p=p;
+		canGrabIngredientFrom=false;
 	}
 	public void update(int timer) {
 		seconds=timer;
@@ -63,7 +68,12 @@ public class Tile {
 		Rectangle temp = new Rectangle(x,y,width,height);
 		return temp;
 	}
-
 	
+	public int getX() {
+		return x;
+	}
 
+	public int getY(){
+		return y;
+	}
 }

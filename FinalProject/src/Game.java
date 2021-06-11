@@ -264,7 +264,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		
 
 
-		if (!isWalking) {
+		if (isWalking) {
 			walking.play();
 			System.out.println("is playing walking");
 		}

@@ -21,9 +21,6 @@ public class DeliverySpace extends Tile {
 		imgName = "Delivery Space.png";
 		collide = true;
 	}
-
-	
-	
 	
 
 }

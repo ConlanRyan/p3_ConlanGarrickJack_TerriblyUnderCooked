@@ -244,13 +244,12 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		
 		//music stuff
 		
-		if (title) {
+		if (!title) {
 			titleMusic.play();
 		}
 		if (!isWalking) {
-			walking.stop();
-			walking.stop();
-			System.out.println("is stopping walking");
+			walking.play();
+			System.out.println("is playing walking");
 		}
 		
 		//walking.play();
@@ -276,7 +275,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				p.up();
 			}
 			isWalking=true;
-			walking.play();
+			walking.stop();
 
 
 		}
@@ -322,8 +321,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		if(e.getKeyCode()==84) {
 			
 			title=false;
-			titleMusic.stop();
-			titleMusic.stop();
+			//titleMusic.stop();
+			//titleMusic.stop();
 		}
 	}
 
